@@ -42,16 +42,6 @@ dist/
 build/
 /bin/
 
-# Files created by the bot inside resources folder
-resources/bannedUsers.bin
-resources/botlogin.txt
-resources/phantombot.db
-resources/stacktrace.txt
-resources/stdio.txt
-resources/web/default.html
-resources/web/default.txt
-resources/scripts/*
-
 # Do not include the class files for GenerateTwitterTokens
 genTwitterTokens/classes/generatetwittertokens
 
@@ -64,5 +54,6 @@ nbproject
 
 # Eclipse Project files
 
-# Custom Ignores
-botlogin.txt
+# Custom ignores
+node_modules/
+./config/config.js

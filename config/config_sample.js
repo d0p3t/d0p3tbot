@@ -14,10 +14,12 @@
 
 var config = {};
 
+config.debug = false;
+
 config.tmi = {
     options: {
         clientId: 'clientId',
-        debug: true                    // set to true to see error messages and chat
+        debug: false                    // keep tmi debug to false unless you're a dev
     },
     connection: {
         reconnect: true

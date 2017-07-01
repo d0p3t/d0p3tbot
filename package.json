@@ -1,0 +1,13 @@
+{
+  "name": "twitch-d0p3tbot",
+  "version": "0.0.1",
+  "description": "Twitch bot for d0p3t",
+  "main": "app.js",
+  "author": "Remco Troost",
+  "license": "MIT",
+  "private": true,
+  "scripts": {"start": "node app.js"},
+  "dependencies": {
+    "tmi.js": "^1.2.1"
+  }
+}

@@ -1,6 +1,7 @@
 #!/bin/bash
 git clean -f -d
-rm app.js
+git reset HEAD app.js
+git checkout -- app.js
 git pull
 npm install
 chmod +x app.js

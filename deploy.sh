@@ -1,5 +1,7 @@
 #!/bin/bash
 git clean -f -d
-git pull origin master
+rm app.js
+git pull
 npm install
+chmod +x app.js
 systemctl start d0p3tbot

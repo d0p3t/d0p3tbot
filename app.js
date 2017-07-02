@@ -21,7 +21,8 @@ if(config.debug)
 var commands = {
   "!social": "Follow me on Twitter https://twitter.com/d0p3t",
   "!twitter": "Follow me on Twitter https://twitter.com/d0p3t",
-  "!steam": "https://steamcommunity.com/id/d0p3t"
+  "!steam": "https://steamcommunity.com/id/d0p3t",
+  "!discord": "https://discord.gg/bSd4cYJ"
 };
 
 var notices = [

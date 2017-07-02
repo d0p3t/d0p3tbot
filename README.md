@@ -1,5 +1,5 @@
-# d0p3tbot for Twitch
-(v0.0.1) *Currently in Development*
+# d0p3tbot for Twitch 
+[![Build Status](https://travis-ci.org/d0p3t/d0p3tbot.svg?branch=master)](https://travis-ci.org/d0p3t/d0p3tbot) (v0.0.1) *Currently in Development*
 
 Multifunctional chat bot for TwitchTV using NodeJS. Features simple commands, subscription/resubscription announcements, notices and more. 
 

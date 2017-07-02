@@ -34,7 +34,6 @@ var notices = [
 
 var msgcount = 1;
 var noticenum = 25;
-var cmdsstring = "Commands: ";
 
 // END OF VARIABLES THAT CAN BE CHANGED
 
@@ -91,6 +90,7 @@ client.on("chat", function (channel, userstate, message, self) {
 client.on("chat", function (channel, userstate, message, self) {
   if (self) return;
   if(message === "!commands") {
+      var cmdsstring = "Commands: ";
       for (var i in commands) {
           cmdsstring = cmdsstring + i + ", ";
       }

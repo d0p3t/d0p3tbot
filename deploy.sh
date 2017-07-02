@@ -1,4 +1,4 @@
-# Script for deploy updates
+#!/bin/bash
 git clean -f -d
 git pull origin master
 npm install

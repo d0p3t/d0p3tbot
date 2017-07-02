@@ -7,6 +7,7 @@ This is a multifunctional chat bot for TwitchTV using NodeJS. Features simple co
 
 ## Demo
 A working demo can be found running on the authors Twitch channel at https://twitch.tv/d0p3t
+- Type `!commands` to get a list of the available chat commands
 
 ---
 

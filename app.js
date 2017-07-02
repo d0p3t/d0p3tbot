@@ -34,9 +34,22 @@ var notices = [
 
 var msgcount = 1;
 var noticenum = 25;
-var ClientSay = cooldown(client, client.say, 5000);
 
 // END OF VARIABLES THAT CAN BE CHANGED
+
+var cooldown = function (thisArg, fn, timeout) {
+    var onCooldown = false;
+    return function (/* args */) {
+        if (!onCooldown) {
+            fn.apply(thisArg, arguments);
+            onCooldown = true;
+            setTimeout(function () {
+                onCooldown = false;
+            }, timeout);
+        }
+    }
+}
+var ClientSay = cooldown(client, client.say, 5000);
 
 // -------------------------------
 // Methods for subscription/resub
@@ -127,17 +140,4 @@ client.on("chat", function (channel, userstate, message, self) {
 // HELPER FUNCTIONS
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-var cooldown = function (thisArg, fn, timeout) {
-    var onCooldown = false;
-    return function (/* args */) {
-        if (!onCooldown) {
-            fn.apply(thisArg, arguments);
-            onCooldown = true;
-            setTimeout(function () {
-                onCooldown = false;
-            }, timeout);
-        }
-    }
 }

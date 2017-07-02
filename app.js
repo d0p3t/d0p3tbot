@@ -84,11 +84,19 @@ client.on("chat", function (channel, userstate, message, self) {
 });
 
 // ----------------------------------
-// Method for subcount and followage
-// ----------------------------------
+// Method for !commands, !subcount,
+// !followage, !uptime
+// -----------------------------------
 client.on("chat", function (channel, userstate, message, self) {
   if (self) return;
-  if(message === "!subcount") {
+  if(message === "!commands") {
+      var cmdsstring = "Commands: ";
+      for (var i in commands) {
+          cmdsstring = cmdsstring + i + ", ";
+      }
+      client.say(channel, cmdsstring);
+  }
+  else if(message === "!subcount") {
     client.api({
       url: "https://beta.decapi.me/twitch/subcount/d0p3t"
     }, function(err, res, body) {
@@ -113,9 +121,6 @@ client.on("chat", function (channel, userstate, message, self) {
     });
   }
 });
-
-
-
 
 // HELPER FUNCTIONS
 function getRandomInt(min, max) {

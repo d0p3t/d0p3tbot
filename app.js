@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var winston = require('winston');
 var tmi = require('tmi.js');
 var config = require('./config/config.js');

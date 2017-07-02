@@ -3,7 +3,7 @@
 
 This is a multifunctional chat bot for TwitchTV using NodeJS. Features simple commands, subscription/resubscription announcements, notices etc.
 
-![Chat Preview](http://i.imgur.com/xYeFiEz.png)
+![Chat Preview](http://i.imgur.com/suOPO9z.png)
 
 ## Demo
 A working demo can be found running on the authors Twitch channel at https://twitch.tv/d0p3t

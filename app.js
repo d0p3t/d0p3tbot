@@ -34,6 +34,7 @@ var notices = [
 
 var msgcount = 1;
 var noticenum = 25;
+var ClientSay = cooldown(client, client.say, 5000);
 
 // END OF VARIABLES THAT CAN BE CHANGED
 
@@ -78,7 +79,7 @@ client.on("chat", function (channel, userstate, message, self) {
   for (var i in commands) {
     if(message === i) {
       winston.log('debug', 'Chat command triggered');
-      client.say(channel, commands[i]);
+      ClientSay(channel, commands[i]);
     }
   }
 });
@@ -94,7 +95,7 @@ client.on("chat", function (channel, userstate, message, self) {
       for (var i in commands) {
           cmdsstring = cmdsstring + i + ", ";
       }
-      client.say(channel, cmdsstring + " !commands.");
+      ClientSay(channel, cmdsstring + " !commands.");
       cmdsstring = "";
   }
   else if(message === "!subcount") {
@@ -102,7 +103,7 @@ client.on("chat", function (channel, userstate, message, self) {
       url: "https://beta.decapi.me/twitch/subcount/d0p3t"
     }, function(err, res, body) {
         if(!err)
-          client.say(channel, body + " subs");
+          ClientSay(channel, body + " subs");
     });
   }
   else if (message === "!followage") {
@@ -118,7 +119,7 @@ client.on("chat", function (channel, userstate, message, self) {
       url: "https://decapi.me/twitch/uptime?channel=d0p3t"
     }, function(err, res, body) {
         if(!err)
-          client.say(channel, body);
+          ClientSay(channel, body);
     });
   }
 });
@@ -126,4 +127,17 @@ client.on("chat", function (channel, userstate, message, self) {
 // HELPER FUNCTIONS
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+var cooldown = function (thisArg, fn, timeout) {
+    var onCooldown = false;
+    return function (/* args */) {
+        if (!onCooldown) {
+            fn.apply(thisArg, arguments);
+            onCooldown = true;
+            setTimeout(function () {
+                onCooldown = false;
+            }, timeout);
+        }
+    }
 }

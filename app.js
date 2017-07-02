@@ -101,6 +101,14 @@ client.on("chat", function (channel, userstate, message, self) {
           client.say(channel, userstate.username + " has been following for " + body);
     });
   }
+  else if (message === "!uptime") {
+    client.api({
+      url: "https://decapi.me/twitch/uptime?channel=d0p3t"
+    }, function(err, res, body) {
+        if(!err)
+          client.say(channel, body);
+    });
+  }
 });
 
 

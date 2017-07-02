@@ -12,3 +12,4 @@ Multifunctional chat bot for TwitchTV using NodeJS
 ## ToDo List
 * Frontend
 * AI chat
+* Create own API for !subcount !followage !uptime

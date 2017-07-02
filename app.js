@@ -95,6 +95,7 @@ client.on("chat", function (channel, userstate, message, self) {
           cmdsstring = cmdsstring + i + ", ";
       }
       client.say(channel, cmdsstring + " !commands.");
+      cmdsstring = "";
   }
   else if(message === "!subcount") {
     client.api({

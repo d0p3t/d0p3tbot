@@ -57,3 +57,4 @@ nbproject
 # Custom ignores
 node_modules/
 config/config.js
+package-lock.json

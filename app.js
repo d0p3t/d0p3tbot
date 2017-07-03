@@ -1,20 +1,33 @@
 #!/usr/bin/env node
+const logger = require('./utils/logger');
+var express = require('express');
+const tmi = require('tmi.js');
+const config = require('./config/config.js');
 
-var winston = require('winston');
-var tmi = require('tmi.js');
-var config = require('./config/config.js');
+// Express
+var app = express();
+var routes = require('./routes');
+logger.debug("Overriding 'Express' logger");
 
-var client = new tmi.client(config.tmi);
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
+
+app.set('views', './views');
+app.set('view engine', 'pug');
+
+app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({'extended':'true'}));
+app.use(bodyParser.json());
+app.use(methodOverride());
+app.use(morgan('combined',({ "stream": logger.stream })));
+
+app.use('/', routes);
+
+// TMI.js
+const client = new tmi.client(config.tmi);
 client.connect();
 
-winston.configure({
-  transports: [
-    new (winston.transports.Console)(),
-    new (winston.transports.File)({ filename: 'logs/logfile.log' })
-  ]
-});
-if(config.debug)
-  winston.level = 'debug';
 
 // -------------------------------
 // Variables that can be changed
@@ -56,11 +69,11 @@ var ClientSay = cooldown(client, client.say, 5000);
 // -------------------------------
 client.on("subscription", function (channel, username, method, message, userstate) {
 	if (method.prime === true) {
-		winston.log('info','Prime Sub detected! Triggering chat message...');
+		logger.info('Prime Sub detected! Triggering chat message...');
 		client.say(channel, "PogChamp " + username + " just subscribed with Twitch Prime!!! (" + message + ")");
 	}
 	else {
-		winston.log('info','Normal Sub detected! Trigger chat message...');
+		logger.info('Normal Sub detected! Trigger chat message...');
 		client.say(channel, "PogChamp " + username + " just subscribed!!! (" + message + ")");
 	}
 
@@ -68,11 +81,11 @@ client.on("subscription", function (channel, username, method, message, userstat
 
 client.on("resub", function (channel, username, months, message, userstate, methods) {
 	if (methods.prime === true) {
-		winston.log('info', 'Prime Resub detected! Triggering chat message...');
+		logger.info('Prime Resub detected! Triggering chat message...');
 		client.say(channel, "PogChamp RESUB HYPE PogChamp " + username + " has just re-subscribed for " + months + " months using Twitch Prime!!! (" + message + ")");
 	}
 	else {
-		winston.log('info','Normal Resub detected! Triggering chat message...');
+		logger.info('Normal Resub detected! Triggering chat message...');
 		client.say(channel, "PogChamp RESUB HYPE PogChamp " + username + " has just re-subscribed for " + months + " months!!! (" + message + ")");
 	}
 });
@@ -91,7 +104,6 @@ client.on("chat", function (channel, userstate, message, self) {
 
   for (var i in commands) {
     if(message === i) {
-      winston.log('debug', 'Chat command triggered');
       ClientSay(channel, commands[i]);
     }
   }
@@ -141,3 +153,10 @@ client.on("chat", function (channel, userstate, message, self) {
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+
+const port = process.env.PORT || 3000;
+
+app.listen(port, function() {
+  logger.info('Listening on port ' + port + '!');
+});

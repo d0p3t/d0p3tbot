@@ -1,0 +1,12 @@
+{"level":"info","message":"Listening on port 3000!","timestamp":"2017-07-03T18:59:59.066Z"}
+{"level":"info","message":"Listening on port 3000!","timestamp":"2017-07-03T19:04:30.019Z"}
+{"level":"info","message":"::1 - - [03/Jul/2017:19:04:33 +0000] \"GET / HTTP/1.1\" 200 90 \"-\" \"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36\"\n","timestamp":"2017-07-03T19:04:33.922Z"}
+{"level":"info","message":"::1 - - [03/Jul/2017:19:05:24 +0000] \"GET / HTTP/1.1\" 200 130 \"-\" \"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36\"\n","timestamp":"2017-07-03T19:05:24.099Z"}
+{"level":"info","message":"::1 - - [03/Jul/2017:19:18:36 +0000] \"GET / HTTP/1.1\" 200 5771 \"-\" \"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36\"\n","timestamp":"2017-07-03T19:18:36.909Z"}
+{"level":"info","message":"::1 - - [03/Jul/2017:19:19:28 +0000] \"GET / HTTP/1.1\" 200 5971 \"-\" \"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36\"\n","timestamp":"2017-07-03T19:19:28.311Z"}
+{"level":"info","message":"::1 - - [03/Jul/2017:19:20:02 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36\"\n","timestamp":"2017-07-03T19:20:02.245Z"}
+{"level":"info","message":"::1 - - [03/Jul/2017:19:20:03 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36\"\n","timestamp":"2017-07-03T19:20:03.407Z"}
+{"level":"info","message":"Listening on port 3000!","timestamp":"2017-07-03T19:20:07.980Z"}
+{"level":"info","message":"::1 - - [03/Jul/2017:19:20:09 +0000] \"GET / HTTP/1.1\" 200 5962 \"-\" \"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36\"\n","timestamp":"2017-07-03T19:20:09.844Z"}
+{"level":"info","message":"Listening on port 3000!","timestamp":"2017-07-03T19:22:00.012Z"}
+{"level":"info","message":"::1 - - [03/Jul/2017:19:22:05 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36\"\n","timestamp":"2017-07-03T19:22:05.247Z"}

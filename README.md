@@ -1,5 +1,5 @@
 # d0p3tbot for Twitch
-[![Current Version](https://img.shields.io/badge/version-0.0.1-green.svg)](https://github.com/d0p3t/d0p3tbot) [![Build Status](https://travis-ci.org/d0p3t/d0p3tbot.svg?branch=master)](https://travis-ci.org/d0p3t/d0p3tbot)
+[![Current Version](https://img.shields.io/badge/version-0.0.1-green.svg)](https://github.com/d0p3t/d0p3tbot) [![Build Status](https://travis-ci.org/d0p3t/d0p3tbot.svg?branch=master)](https://travis-ci.org/d0p3t/d0p3tbot) [![Discord](https://img.shields.io/discord/102860784329052160.svg)](https://discord.gg/bSd4cYJ)
 
 *In Development* A lot of the current features are specifically designed for the [demo environment](#demo)!
 

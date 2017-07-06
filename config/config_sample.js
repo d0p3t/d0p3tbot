@@ -32,4 +32,6 @@ config.tmi = {
 };
 
 config.discordtoken = 'yourdiscordtokenhere';
+config.twitchchannel = 'yourtwitchchannel';
+
 module.exports = config;

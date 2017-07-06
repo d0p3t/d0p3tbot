@@ -157,12 +157,14 @@ client.on("chat", function (channel, userstate, message, self) {
 
 // START of Discord bot
 discordClient.on('ready', function() {
-    logger.info('Connect to Discord!');
+    logger.info('Successfully connected to Discord!');
 });
 
+var discordStreamingChecks = 50; // check only every 5*50= 250 minutes
+var embed, data, arr, discordChannel;
 setInterval(function(){
     client.api({
-        url: 'https://api.twitch.tv/kraken/streams/d0p3t',
+        url: 'https://api.twitch.tv/kraken/streams/' + config.twitchchannel,
         method: 'GET',
         headers: {
             'Client-ID': config.tmi.options.clientId
@@ -170,19 +172,36 @@ setInterval(function(){
     }, function(err, res, body) {
         if(err) return;
         if(body.stream != null) {
-            var embed = new Discord.RichEmbed()
-                .setTitle("Live Announcement")
-                .setAuthor("d0p3tbot", body.stream.channel.logo)
-                .setColor(0x00AE86)
-                .setDescription(body.stream.channel.status)
-                .addField("Playing " + body.stream.channel.game)
-            discordClient.user.setStatus("dnd");
-            discordClient.user.setGame(body.stream.channel.game);
-            //discordClient.user.send("#general", {embed});
+            logger.info('Stream is online. Checking for last announcement...');
+            if(discordStreamingChecks === 0) discordStreamingChecks = 50;
+            if(discordStreamingChecks === 50) {
+              logger.info('Triggering new announcement...');
+              var embed = new Discord.RichEmbed()
+                  .setAuthor("d0p3t is LIVE on Twitch.TV!",body.stream.channel.logo)
+                  .setTitle("Watch now! " + body.stream.channel.url)
+                  .addField("Now Playing", body.stream.channel.game)
+                  .setColor(0xFFA500)
+                  .addField("Stream Title", body.stream.channel.status)
+                  .setThumbnail(body.stream.preview.medium)
+                  .addField("Followers", body.stream.channel.followers, true)
+                  .addField("Total Views", body.stream.channel.views, true)
+                  .addField("Current Viewers", body.stream.viewers, true)
+                  .setFooter("Stream went live on: " + body.stream.created_at)
+              var data = { status: "idle", afk: false, game: { name: body.stream.channel.game, url: body.stream.channel.url } }
+              discordClient.user.setPresence(data);
+              var arr = discordClient.channels;
+              var discordChannel = arr.find(o => o.id === '330914789150949376');
+              discordChannel.send({embed});
+            }
+            discordStreamingChecks--;
         }
-
+        else {
+          data = { status: "online", afk: false, game: { name: null } }
+          discordClient.user.setPresence(data);
+          discordStreamingChecks = 50;
+        }
     });
-}, 5000);
+}, 300000);
 
 discordClient.login(config.discordtoken);
 // END of Discord bot

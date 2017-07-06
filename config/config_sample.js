@@ -31,4 +31,5 @@ config.tmi = {
     channels: ["#channel"]          // Must have a # sign. For example -> ["#summit1g"]
 };
 
+config.discordtoken = 'yourdiscordtokenhere';
 module.exports = config;

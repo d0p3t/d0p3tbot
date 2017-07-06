@@ -2,6 +2,7 @@
 const logger = require('./utils/logger');
 var express = require('express');
 const tmi = require('tmi.js');
+const Discord = require('discord.js');
 const config = require('./config/config.js');
 
 // Express
@@ -28,21 +29,24 @@ app.use('/', routes);
 const client = new tmi.client(config.tmi);
 client.connect();
 
+// DISCORD.js
+const discordClient = new Discord.Client();
 
 // -------------------------------
 // Variables that can be changed
 // -------------------------------
 // Add commands here. CustomAPI not supported here
 var commands = {
-  "!social": "Follow me on Twitter https://twitter.com/d0p3t",
-  "!twitter": "Follow me on Twitter https://twitter.com/d0p3t",
+  "!social": "Twitter: https://twitter.com/d0p3t",
+  "!twitter": "https://twitter.com/d0p3t",
   "!steam": "https://steamcommunity.com/id/d0p3t",
-  "!discord": "https://discord.gg/bSd4cYJ"
+  "!discord": "Community Discord: https://discord.gg/bSd4cYJ"
 };
 
 var notices = [
   "Don't forget to follow to catch the next stream!",
-  "I'm a bot created and maintained by d0p3t"
+  "I'm a bot created and maintained by d0p3t",
+  "Follow me on Twitter https://twitter.com/d0p3t"
 ];
 
 var msgcount = 1;
@@ -64,6 +68,7 @@ var cooldown = function (thisArg, fn, timeout) {
 }
 var ClientSay = cooldown(client, client.say, 5000);
 
+// START of Twitch bot
 // -------------------------------
 // Methods for subscription/resub
 // -------------------------------
@@ -148,11 +153,49 @@ client.on("chat", function (channel, userstate, message, self) {
     });
   }
 });
+// END of Twitch bot
+
+// START of Discord bot
+discordClient.on('ready', function() {
+    logger.info('Connect to Discord!');
+});
+
+setInterval(function(){
+    client.api({
+        url: 'https://api.twitch.tv/kraken/streams/d0p3t',
+        method: 'GET',
+        headers: {
+            'Client-ID': config.tmi.options.clientId
+        }
+    }, function(err, res, body) {
+        if(err) return;
+        if(body.stream != null) {
+            var embed = new Discord.RichEmbed()
+                .setTitle("Live Announcement")
+                .setAuthor("d0p3tbot", body.stream.channel.logo)
+                .setColor(0x00AE86)
+                .setDescription(body.stream.channel.status)
+                .addField("Playing " + body.stream.channel.game)
+            discordClient.user.setStatus("dnd");
+            discordClient.user.setGame(body.stream.channel.game);
+            //discordClient.user.send("#general", {embed});
+        }
+
+    });
+}, 5000);
+
+discordClient.login(config.discordtoken);
+// END of Discord bot
+
 
 // HELPER FUNCTIONS
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+
+
+
 
 
 const port = process.env.PORT || 3000;

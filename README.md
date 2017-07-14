@@ -4,7 +4,7 @@
 
 <img src="http://i.imgur.com/suOPO9z.png" width="662px" height="200px">
 
-##### A multifunctional chat bot for Twitch and Discord using NodeJS.
+##### A lightweight chat bot for Twitch and Discord using NodeJS.
 
 ![Version](https://img.shields.io/badge/version-0.0.1-green.svg) [![Build Status](https://travis-ci.org/d0p3t/d0p3tbot.svg?branch=master)](https://travis-ci.org/d0p3t/d0p3tbot) [![Discord](https://img.shields.io/discord/330910293934997504.svg)](https://discord.gg/bSd4cYJ) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
 

@@ -14,8 +14,8 @@
 </div>
 
 ## Demo
-A working demo can be found running on the authors Twitch channel at https://twitch.tv/d0p3t
-- Type `!commands` to get a list of the available chat commands
+A working demo can be found running on the authors Twitch channel at https://twitch.tv/d0p3t and on the Discord https://discord.gg/bSd4cYJ
+- Type `!commands` to get a list of the available chat commands on Twitch
 
 ---
 

@@ -1,11 +1,17 @@
+<div align="center">
+
 # d0p3tbot for Twitch
-[![Current Version](https://img.shields.io/badge/version-0.0.1-green.svg)](https://github.com/d0p3t/d0p3tbot) [![Build Status](https://travis-ci.org/d0p3t/d0p3tbot.svg?branch=master)](https://travis-ci.org/d0p3t/d0p3tbot) [![Discord](https://img.shields.io/discord/102860784329052160.svg)](https://discord.gg/bSd4cYJ)
 
-*In Development* A lot of the current features are specifically designed for the [demo environment](#demo)!
+<img src="http://i.imgur.com/suOPO9z.png" width="662px" height="200px">
 
-This is a multifunctional chat bot for TwitchTV using NodeJS. Features simple commands, subscription/resubscription announcements, notices etc.
+##### A multifunctional chat bot for Twitch and Discord using NodeJS.
 
-![Chat Preview](http://i.imgur.com/suOPO9z.png)
+![Version](https://img.shields.io/badge/version-0.0.1-green.svg) [![Build Status](https://travis-ci.org/d0p3t/d0p3tbot.svg?branch=master)](https://travis-ci.org/d0p3t/d0p3tbot) [![Discord](https://img.shields.io/discord/330910293934997504.svg)](https://discord.gg/bSd4cYJ) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
+
+### A lot of the current features are specifically designed for the [demo environment](#demo) and are currently **in development**!
+### This bot work on Windows, OSX and Linux as long as you have NodeJS and NPM installed.
+
+</div>
 
 ## Demo
 A working demo can be found running on the authors Twitch channel at https://twitch.tv/d0p3t

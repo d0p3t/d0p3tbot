@@ -14,7 +14,8 @@
 </div>
 
 ## Demo
-A working demo can be found running on the authors Twitch channel at https://twitch.tv/d0p3t and on the Discord https://discord.gg/bSd4cYJ
+A working demo can be found running on [Twitch](https://twitch.tv/d0p3t) and on [Discord](https://discord.gg/bSd4cYJ)
+
 - Type `!commands` to get a list of the available chat commands on Twitch
 
 ---
@@ -26,6 +27,7 @@ A working demo can be found running on the authors Twitch channel at https://twi
 * Followage command
 * Uptime command
 * Notices every X messages
+* Discord: Live announcements. [example](http://i.imgur.com/squmt3C.png)
 
 ---
 
@@ -49,6 +51,7 @@ Available commands include: *!uptime, !followage, !subcount, !social, !twitter, 
 * Frontend (to add commands,notices etc. Requires rewrite)
 * AI chat (conversational bot)
 * Create own API for !subcount !followage !uptime to reduce `beta.decapi.me` dependancy
+* Commands for Discord
 
 ---
 

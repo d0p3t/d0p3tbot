@@ -1,6 +1,6 @@
 <div align="center">
 
-# d0p3tbot for Twitch
+# d0p3tbot
 
 <img src="http://i.imgur.com/suOPO9z.png" width="662px" height="200px">
 

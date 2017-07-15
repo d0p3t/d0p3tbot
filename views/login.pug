@@ -1,13 +1,22 @@
 extends frontend
 
 block content
-  h1 Login
-  form(method='POST', action='/login')
-    #form-group
-      label Username:
-      input.form-control(name='username',type='text')
-    #form-group
-      label Password:
-      input.form-control(name='password',type='password')
-    br
-    input.btn.btn-primary(type='submit',value='Submit')
+  #login
+    // start:wrapper
+    .header-login
+      .text-center
+        h1
+          i.fa.fa-pied-piper-alt
+          |  D0p3tbot Login
+    .body-login
+      form(role='form' method='POST', action='/login')
+        .form-group
+          input#email.form-control.input-lg(name='username', type='text', placeholder='Enter username')
+        .form-group
+          input#password.form-control.input-lg(name='password',type='password', placeholder='Enter Password')
+        //.checkbox
+        //  label
+        //    input(type='checkbox')
+        //    |  Remember me
+        input.btn.btn-primary.btn-block.btn-lg.btn-perspective(type='submit', value='Submit')
+    // end:wrapper

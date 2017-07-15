@@ -1,4 +1,10 @@
-extends layout
+extends frontend
 
 block content
   h1= message
+  if(!user)
+    p
+      a(href="/login") login
+  else
+    p Go to Dashboard
+      a(href="/dashboard") dashboard

@@ -1,0 +1,16 @@
+html
+  head
+    meta(charset='utf-8')
+    meta(content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    title= title
+    link(rel="stylesheet" type="text/css" href="css/bootstrap.min.css")
+    link(rel="stylesheet" type="text/css" href="css/font-awesome.min.css")
+    link(rel="stylesheet" type="text/css" href="css/bootstrap-reset.css")
+    link(rel="stylesheet" type="text/css" href="css/arjuna.css")
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js')
+    script.
+      var socket = io.connect('http://localhost:3000');
+  body
+    block content

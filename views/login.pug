@@ -6,9 +6,21 @@ block content
     .header-login
       .text-center
         h1
-          i.fa.fa-pied-piper-alt
-          |  D0p3tbot Login
+          i.fa.fa-twitch
+          |  d0p3tbot
     .body-login
+      if(message == 'Wrong username or password')
+        .alert.alert-dismissible.alert-warning(role='alert')
+          button.close(type='button', data-dismiss='alert')
+            span(aria-hidden='true') ×
+            span.sr-only Close
+          strong Oops!
+          |  #{message}
+      if(logoutSuccess == 'You have been logged out')
+        .alert.alert-success(role='alert')
+          strong Success!
+          |  #{logoutSuccess}
+
       form(role='form' method='POST', action='/login')
         .form-group
           input#email.form-control.input-lg(name='username', type='text', placeholder='Enter username')
@@ -18,5 +30,8 @@ block content
         //  label
         //    input(type='checkbox')
         //    |  Remember me
-        input.btn.btn-primary.btn-block.btn-lg.btn-perspective(type='submit', value='Submit')
+        input.btn.btn-orange.btn-block.btn-lg.btn-perspective(type='submit', value='LOGIN')
+        p.text-center
+          i.fa.fa-heart(style="color: red;")
+          a(href="https:twitter.com/d0p3t" target="_blank")  d0p3t
     // end:wrapper

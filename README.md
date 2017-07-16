@@ -32,7 +32,7 @@ A working demo can be found running on [Twitch](https://twitch.tv/d0p3t) and on 
 ---
 
 ## Setup
-You must have `nodejs` and `npm` installed.
+You must have `nodejs` and `npm` installed as well as a running instance of `mongodb`.
 
 Clone this repo and run `npm install` to install all the dependencies.
 

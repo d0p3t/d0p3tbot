@@ -9,13 +9,12 @@ html
     link(rel="stylesheet" type="text/css" href="css/font-awesome.min.css")
     link(rel="stylesheet" type="text/css" href="css/bootstrap-reset.css")
     link(rel="stylesheet" type="text/css" href="css/arjuna.css")
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js')
-    script.
-      var socket = io.connect('http://localhost:3000');
+    link(rel="stylesheet" type="text/css" href="plugins/data-tables/DT_bootstrap.css")
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js') 
   body.cl-default.fixed
     header.header
       a.logo(href='/dashboard')
-        i.fa.fa-pied-piper-alt
+        i.fa.fa-twitch
         |  D0P3TBOT
       // Header Navbar: style can be found in header.less
       nav.navbar.navbar-static-top(role='navigation')
@@ -183,23 +182,25 @@ html
             // Nav tabs
             ul.nav.nav-tabs(role='tablist')
               li.active
-                a(href='#user', role='tab', data-toggle='tab')
-                  i.fa.fa-users
+                a(href='#status', role='tab', data-toggle='tab')
+                  i.fa.fa-circle
               li
-                a(href='#notif', role='tab', data-toggle='tab')
-                  i.fa.fa-bullhorn
+                a(href='#statistics', role='tab', data-toggle='tab')
+                  i.fa.fa-bar-chart-o
               li
                 a(href='#profile', role='tab', data-toggle='tab')
                   i.fa.fa-cog
             // Tab panes
             .tab-content
-              #user.tab-pane.active
+              #status.tab-pane.active
                 .image
                   img.img-circle(src='img/user.jpg', alt='User Image')
                 .info
-                  p Hello, #{user.username}
-                  small(style='color: #eee;') Welcome Back
-              #notif.tab-pane
+                  p Stream 
+                    span#streamStatus Offline
+                  small(style='color: #eee;') Viewers: 
+                    span#streamViewers 0
+              #statistics.tab-pane
                 ul.menu
                   li
                     // start message
@@ -234,130 +235,31 @@ html
           // sidebar menu: : style can be found in sidebar.less
           ul.sidebar-menu
             li.active
-              a(href='index.html')
+              a(href='/dashboard')
                 i.fa.fa-dashboard
                 span Dashboard
-            li.treeview
-              a(href='')
+            li
+              a(href='/commands')
                 i.fa.fa-cog
                 span Commands
-                i.fa.fa-angle-left.pull-right
-              ul.treeview-menu
-                li
-                  a(href='todo-list.html')
-                    i.fa.fa-circle-o
-                    |  Todo List
-                li
-                  a(href='draggable-portlet.html')
-                    i.fa.fa-circle-o
-                    |  Draggable Portlet
-                li
-                  a(href='nestable.html')
-                    i.fa.fa-circle-o
-                    |  Nestable
-            li.treeview
-              a(href='')
+            li
+              a(href='/notices')
                 i.fa.fa-bar-chart-o
                 span Notices
-                i.fa.fa-angle-left.pull-right
-              ul.treeview-menu
-                li
-                  a(href='morris.html')
-                    i.fa.fa-circle-o
-                    |  Morris
-                li
-                  a(href='xchart.html')
-                    i.fa.fa-circle-o
-                    |  XChart
-            li.treeview
-              a(href='#')
-                i.fa.fa-laptop
+            li
+              a(href='/alerts')
+                i.fa.fa-exclamation
                 span Alerts
-                i.fa.fa-angle-left.pull-right
-              ul.treeview-menu
-                li
-                  a(href='general.html')
-                    i.fa.fa-circle-o
-                    |  General
-                li
-                  a(href='icons.html')
-                    i.fa.fa-circle-o
-                    |  Icons
-                li
-                  a(href='button.html')
-                    i.fa.fa-circle-o
-                    |  Buttons
-                li
-                  a(href='slider.html')
-                    i.fa.fa-circle-o
-                    |  Sliders
-                li
-                  a(href='timeline.html')
-                    i.fa.fa-circle-o
-                    |  Timeline
-                li
-                  a(href='typography.html')
-                    i.fa.fa-circle-o
-                    |  Typography
-                li
-                  a(href='grid.html')
-                    i.fa.fa-circle-o
-                    |  Grid
-                li
-                  a(href='panel-well.html')
-                    i.fa.fa-circle-o
-                    |  Panel & Well
-                li
-                  a(href='collapse.html')
-                    i.fa.fa-circle-o
-                    |  Collapse
-                li
-                  a(href='list-media.html')
-                    i.fa.fa-circle-o
-                    |  List Media
-                li
-                  a(href='popup-notif.html')
-                    i.fa.fa-circle-o
-                    |  Popup & Notification
-                li
-                  a(href='jumbotron-thumbnail.html')
-                    i.fa.fa-circle-o
-                    |  Jumbotron & Thumbnail
-                li
-                  a(href='breadcrumb-pagination.html')
-                    i.fa.fa-circle-o
-                    |  Breadcrumb & Pagination
-            li.treeview
-              a(href='#')
-                i.fa.fa-edit
+            li
+              a(href='/discord')
+                i.fa.fa-microphone
                 span Discord
-                i.fa.fa-angle-left.pull-right
-              ul.treeview-menu
-                li
-                  a(href='form-component.html')
-                    i.fa.fa-circle-o
-                    |  Form Component
-                li
-                  a(href='advance-component.html')
-                    i.fa.fa-circle-o
-                    |  Advance Component
-                li
-                  a(href='form-wizard.html')
-                    i.fa.fa-circle-o
-                    |  Form Wizard
-                li
-                  a(href='form-validation.html')
-                    i.fa.fa-circle-o
-                    |  Form Validation
-                li
-                  a(href='dropzone-file-upload.html')
-                    i.fa.fa-circle-o
-                    |  Dropzone File Upload
-                li
-                  a(href='multiple-file-upload.html')
-                    i.fa.fa-circle-o
-                    |  Multiple File upload
-      block content
-      script(src="js/jquery-1.11.1.min.js")
-      script(src="js/bootstrap.min.js")
-      script(src="js/arjuna.js")
+      // end:left sidebar
+      // start:right sidebar
+      block content        
+    script(src="js/jquery-1.11.1.min.js")
+    script(src="js/bootstrap.min.js")
+    script(src="js/arjuna.js")
+    script(src="plugins/advanced-datatable/media/js/jquery.dataTables.js")
+    script(src="plugins/data-tables/DT_bootstrap.js")
+    script(src="js/app.js")

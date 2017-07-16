@@ -15,7 +15,8 @@ var twitch = function() {
       "!social": "Twitter: https://twitter.com/d0p3t",
       "!twitter": "https://twitter.com/d0p3t",
       "!steam": "https://steamcommunity.com/id/d0p3t",
-      "!discord": "Community Discord: https://discord.gg/bSd4cYJ"
+      "!discord": "Community Discord: https://discord.gg/bSd4cYJ",
+      "!project": "Lightweight Twitch/Discord bot with NodeJS. More info https://github.com/d0p3t/d0p3tbot"
     };
 
     var notices = [
@@ -95,6 +96,7 @@ var twitch = function() {
     client.on("chat", function (channel, userstate, message, self) {
       if (self) return;
       if(message === "!commands") {
+        // TO DO: retreive all commands from the database
           var cmdsstring = "Commands: ";
           for (var i in commands) {
               cmdsstring = cmdsstring + i + ", ";

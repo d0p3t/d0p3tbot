@@ -1,0 +1,47 @@
+extends layout
+
+block content
+  aside.right-side
+    section.content
+      h1
+        | #{message}
+        small Control panel
+      // start:content
+      .row
+        .col-md-8
+          .box
+            h4 Add Command
+            hr
+            form(role='form' method='post', action='').form-inline.add-command
+              .form-group
+                label.sr-only(for='name') Command name
+                input#name.form-control(name='commandname', type='text', placeholder='Command name')
+              .form-group
+                label.sr-only(for='text') Command text
+                input#text.form-control(name='commandtext', type='text', placeholder='Command text')
+              input.btn.btn-primary(type='submit', value='Add')                
+      .row
+        .col-md-12
+          .box
+            h4 Commands List
+            hr
+            table.table.table-striped.table-advance.table-hover#escalation
+              thead
+                tr
+                  th
+                    i.fa.fa-bullhorn(data-original-title='', title='')
+                    |  Name
+                  th.hidden-phone
+                    i.fa.fa-comments(data-original-title='', title='')
+                    |  Text
+                  th
+              tbody#commands
+                for c in cmds
+                  tr
+                    td #{c.name}
+                    td.hidden-phone #{c.value}
+                    td
+                      button.btn.btn-primary.btn-xs(data-original-title='', title='')
+                        i.fa.fa-pencil(data-original-title='', title='')
+                      button.btn.btn-danger.btn-xs(data-original-title='', title='')
+                        i.fa.fa-trash-o(data-original-title='', title='')

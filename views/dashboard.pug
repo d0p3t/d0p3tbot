@@ -9,6 +9,38 @@ block content
       // start:content
       .row
         .col-md-12
-          .box.blank-page
+          .box
             | Stuff goes here.
-      // end:content
+      .row
+        .col-md-4
+          .the-box.bg-info.tiles-information
+            i.fa.fa-users.icon-bg
+            .tiles-inner.text-center
+              p TOTAL FOLLOWERS
+              h1.bolded 77
+              .progress.progress-xs
+                .progress-bar.progress-bar-primary(role='progressbar', aria-valuenow='80', aria-valuemin='0', aria-valuemax='100', style='width: 80%')
+              p
+                small Better than yesterday ( 2,5% )
+        .col-md-4
+          .the-box.bg-primary.tiles-information
+            i.fa.fa-television.icon-bg
+            .tiles-inner.text-center
+              p TOTAL VIEWS
+              h1.bolded 529
+              .progress.progress-xs
+                .progress-bar.progress-bar-primary(role='progressbar', aria-valuenow='80', aria-valuemin='0', aria-valuemax='100', style='width: 80%')
+              p
+                small Better than yesterday ( 2,5% )
+        .col-md-4
+          .the-box.bg-danger.tiles-information
+            i.fa.fa-users.icon-bg
+            .tiles-inner.text-center
+              p AVG. VIEWERS
+              h1.bolded 5
+              .progress.progress-xs
+                .progress-bar.progress-bar-danger(role='progressbar', aria-valuenow='80', aria-valuemin='0', aria-valuemax='100', style='width: 80%')
+              p
+                small Better than yesterday ( 2,5% )
+
+  // end:right sidebar              

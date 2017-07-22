@@ -49,6 +49,7 @@ Available commands include: *!uptime, !followage, !subcount, !social, !twitter, 
 
 ## Upcoming Features
 * Frontend ***In Progress***
+* Multi-user support
 * AI chat (conversational bot)
 * Create own API for !subcount !followage !uptime to reduce `beta.decapi.me` dependancy
 * Commands for Discord

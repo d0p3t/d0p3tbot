@@ -1,6 +1,8 @@
 const logger = require('../utils/logger');
 const config = require('../config/config.js');
 const tmi = require('tmi.js');
+const Command = require('../models/command');
+const Notice = require('../models/notice');
 
 // TMI.js
 const client = new tmi.client(config.tmi);
@@ -11,19 +13,24 @@ var twitch = function() {
     // Variables that can be changed
     // -------------------------------
     // Add commands here. CustomAPI not supported here
-    var commands = {
-      "!social": "Twitter: https://twitter.com/d0p3t",
-      "!twitter": "https://twitter.com/d0p3t",
-      "!steam": "https://steamcommunity.com/id/d0p3t",
-      "!discord": "Community Discord: https://discord.gg/bSd4cYJ",
-      "!project": "Lightweight Twitch/Discord bot with NodeJS. More info https://github.com/d0p3t/d0p3tbot"
-    };
+    var commands = {};
+    var notices = {};
 
-    var notices = [
-      "Don't forget to follow to catch the next stream!",
-      "I'm a bot created and maintained by d0p3t",
-      "Follow me on Twitter https://twitter.com/d0p3t"
-    ];
+    setInterval(function(){
+      Command.find({}, function(err, cmds) {
+        if(err)
+          logger.info('[Database] Error retrieving commands | ' + err);
+        for (var i in cmds)
+          commands[i] = cmds[i];
+      });
+
+      Notice.find({}, function(err, nots) {
+        if(err)
+          logger.info('[Database] Error retrieving notices | ' + err);
+        for (var i in nots)
+          notices[i] = nots[i];
+      });
+    }, 20000);
 
     var msgcount = 1;
     var noticenum = 25;
@@ -41,9 +48,21 @@ var twitch = function() {
             }
         }
     }
-    var ClientSay = cooldown(client, client.say, 5000);
+    var ClientSay = cooldown(client, client.action, 5000);
     client.on("connected", function (address, port) {
         logger.info('[Twitch] Successfully connected to channel ' + config.tmi.channels);
+        Command.find({}, function(err, cmds) {
+          if(err)
+            logger.info('[Database] Error retrieving commands | ' + err);
+          for (var i in cmds)
+            commands[i] = cmds[i];
+        });
+        Notice.find({}, function(err, nots) {
+          if(err)
+            logger.info('[Database] Error retrieving notices | ' + err);
+          for (var i in nots)
+            notices[i] = nots[i];
+        });
     });
     // -------------------------------
     // Methods for subscription/resub
@@ -51,11 +70,11 @@ var twitch = function() {
     client.on("subscription", function (channel, username, method, message, userstate) {
     	if (method.prime === true) {
     		logger.info('[Twitch] Prime Sub detected! Triggering chat message...');
-    		client.say(channel, "PogChamp " + username + " just subscribed with Twitch Prime!!! (" + message + ")");
+    		client.action(channel, "PogChamp " + username + " just subscribed with Twitch Prime!!! (" + message + ")");
     	}
     	else {
     		logger.info('[Twitch] Normal Sub detected! Trigger chat message...');
-    		client.say(channel, "PogChamp " + username + " just subscribed!!! (" + message + ")");
+    		client.action(channel, "PogChamp " + username + " just subscribed!!! (" + message + ")");
     	}
 
     });
@@ -63,11 +82,11 @@ var twitch = function() {
     client.on("resub", function (channel, username, months, message, userstate, methods) {
     	if (methods.prime === true) {
     		logger.info('[Twitch] Prime Resub detected! Triggering chat message...');
-    		client.say(channel, "PogChamp RESUB HYPE PogChamp " + username + " has just re-subscribed for " + months + " months using Twitch Prime!!! (" + message + ")");
+    		client.action(channel, "PogChamp RESUB HYPE PogChamp " + username + " has just re-subscribed for " + months + " months using Twitch Prime!!! (" + message + ")");
     	}
     	else {
     		logger.info('[Twitch] Normal Resub detected! Triggering chat message...');
-    		client.say(channel, "PogChamp RESUB HYPE PogChamp " + username + " has just re-subscribed for " + months + " months!!! (" + message + ")");
+    		client.action(channel, "PogChamp RESUB HYPE PogChamp " + username + " has just re-subscribed for " + months + " months!!! (" + message + ")");
     	}
     });
 
@@ -76,16 +95,17 @@ var twitch = function() {
     // ----------------------------------
     client.on("chat", function (channel, userstate, message, self) {
       if (self) return;
+
       if(msgcount === noticenum) {
-        client.say(channel, notices[getRandomInt(0, notices.length - 1)]);
+        client.action(channel, notices[getRandomInt(0, objLength(notices) -1)].value);
         msgcount = 1;
       }
       else
         msgcount++;
 
-      for (var i in commands) {
-        if(message === i)
-          ClientSay(channel, commands[i]);
+      for(var i in commands) {
+        if(message == commands[i].name)
+          ClientSay(channel, commands[i].value);
       }
     });
 
@@ -96,10 +116,9 @@ var twitch = function() {
     client.on("chat", function (channel, userstate, message, self) {
       if (self) return;
       if(message === "!commands") {
-        // TO DO: retreive all commands from the database
           var cmdsstring = "Commands: ";
           for (var i in commands) {
-              cmdsstring = cmdsstring + i + ", ";
+              cmdsstring = cmdsstring + commands[i].name + ", ";
           }
           ClientSay(channel, cmdsstring + " !commands.");
           cmdsstring = "";
@@ -116,8 +135,8 @@ var twitch = function() {
         client.api({
           url: "https://beta.decapi.me/twitch/followage/d0p3t/" + userstate.username
         }, function(err, res, body) {
-            if(!err)
-              client.say(channel, userstate.username + " has been following for " + body);
+            if(!err) // fix message when not following
+              client.action(channel, userstate.username + " has been following for " + body);
         });
       }
       else if (message === "!uptime") {
@@ -133,6 +152,16 @@ var twitch = function() {
     // HELPER FUNCTIONS
     function getRandomInt(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function objLength(obj){
+      var i=0;
+      for (var x in obj){
+        if(obj.hasOwnProperty(x)){
+          i++;
+        }
+      }
+      return i;
     }
 }
 

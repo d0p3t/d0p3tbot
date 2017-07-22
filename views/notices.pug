@@ -8,7 +8,63 @@ block content
         small Control panel
       // start:content
       .row
+        .col-md-4
+          .box
+            h4 Add Notices
+            hr
+            form(role='form' method='post', action='').form-inline.add-notice
+              .form-group
+                label.sr-only(for='name') Notice name
+                input#name.form-control(name='noticename', type='text', placeholder='notice name')
+              .form-group
+                label.sr-only(for='text') Notice text
+                input#text.form-control(name='noticetext', type='text', placeholder='notice text')
+              input.btn.btn-primary(type='submit', value='Add')                
+        .col-md-4
+          .box
+            h4 Edit Notices
+            hr
+            form(role='form' method='post', action='').form-inline.edit-notice
+              .form-group
+                label.sr-only(for='name') Notice name
+                select#editname.form-control(name='noticename', type='text', placeholder='notice name' style='min-width: 200px; max-width: 200px;')
+                  for c in nots
+                    option #{c.name}
+              .form-group
+                label.sr-only(for='text') Notice text
+                input#edittext.form-control(name='noticetext', type='text', placeholder='notice text')
+              input.btn.btn-primary(type='submit', value='Add')          
+        .col-md-4
+          .box
+            h4 Delete Notice
+            hr
+            form(role='form' method='post', action='').form-inline.del-notice
+              .form-group
+                label.sr-only(for='name') Notice name
+                select#delname.form-control(name='noticename', type='text', placeholder='notice name' style='min-width: 400px; max-width: 400px;')
+                  for c in nots
+                    option #{c.name}
+              input.btn.btn-danger(type='submit', value='Delete')         
+      .row
         .col-md-12
-          .box.blank-page
-            | Stuff goes here.
-      // end:content
+          .box
+            h4 Notices List
+            hr
+            table.table.table-striped.table-advance.table-hover#escalation
+              thead
+                tr
+                  th
+                    i.fa.fa-bullhorn(data-original-title='', title='')
+                    |  Name
+                  th.hidden-phone
+                    i.fa.fa-comments(data-original-title='', title='')
+                    |  Text
+                  th
+              tbody#notices
+                for c in nots
+                  tr(name= c.name)
+                    td #{c.name}
+                    td.hidden-phone #{c.value}
+                    td
+                      button.btn.btn-danger.btn-xs(data-original-title='', title='')
+                        i.fa.fa-trash-o(data-original-title='', title='')

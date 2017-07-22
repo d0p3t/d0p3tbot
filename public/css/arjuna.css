@@ -436,8 +436,8 @@ body > .header .logo .icon {
   margin: 0 5px;
 }
 
-.user-panel .nav-tabs>li.active>a, 
-.user-panel .nav-tabs>li.active>a:hover, 
+.user-panel .nav-tabs>li.active>a,
+.user-panel .nav-tabs>li.active>a:hover,
 .user-panel .nav-tabs>li.active>a:focus{
   background-color: #1abc9c;
   color: #ddd;
@@ -857,7 +857,7 @@ body > .header .logo .icon {
 }
 
 .navbar-minimal {
-  width: 60px;    
+  width: 60px;
   min-height: 60px;
   max-height: 100%;
   background-color: #2c3e50;
@@ -919,7 +919,7 @@ body > .header .logo .icon {
 
 .navbar-minimal.open {
   width: 320px;
-} 
+}
 
 .navbar-minimal.open > .navbar-menu {
   top: 60px;
@@ -959,7 +959,7 @@ body > .header .logo .icon {
     width: 0;
     height: 0;
     border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;  
+    border-bottom: 10px solid transparent;
     border-right: 10px solid rgb(51, 51, 51);
     border-right-color: rgba(51, 51, 51, 0.8);
   }
@@ -1145,7 +1145,7 @@ body > .header {
 /* Define 2 column template */
 .right-side,
 .left-side {
-  min-height: 100%;
+  /*min-height: 100%;*/
   display: block;
 }
 /*right side - contins main content*/
@@ -1206,172 +1206,172 @@ body > .header {
   border-color: #d87a68 !important;
 }
 
-.btn-adn:hover, 
-.btn-adn:focus, 
-.btn-adn:active, 
-.btn-adn.active, 
+.btn-adn:hover,
+.btn-adn:focus,
+.btn-adn:active,
+.btn-adn.active,
 .open .dropdown-toggle.btn-adn{
   border-color: #d87a68 !important;
 }
 
 .btn-bitbucket,
-.btn-bitbucket:hover, 
-.btn-bitbucket:focus, 
-.btn-bitbucket:active, 
-.btn-bitbucket.active, 
+.btn-bitbucket:hover,
+.btn-bitbucket:focus,
+.btn-bitbucket:active,
+.btn-bitbucket.active,
 .open .dropdown-toggle.btn-bitbucket{
   border-color: #205081 !important;
 }
 
 .btn-dropbox,
-.btn-dropbox:hover, 
-.btn-dropbox:focus, 
-.btn-dropbox:active, 
-.btn-dropbox.active, 
+.btn-dropbox:hover,
+.btn-dropbox:focus,
+.btn-dropbox:active,
+.btn-dropbox.active,
 .open .dropdown-toggle.btn-dropbox{
   border-color: #1087dd !important;
 }
 
 .btn-facebook,
-.btn-facebook:hover, 
-.btn-facebook:focus, 
-.btn-facebook:active, 
-.btn-facebook.active, 
+.btn-facebook:hover,
+.btn-facebook:focus,
+.btn-facebook:active,
+.btn-facebook.active,
 .open .dropdown-toggle.btn-facebook{
   border-color: #3b5998 !important;
 }
 
 .btn-flicker,
-.btn-flickr:hover, 
-.btn-flickr:focus, 
-.btn-flickr:active, 
-.btn-flickr.active, 
+.btn-flickr:hover,
+.btn-flickr:focus,
+.btn-flickr:active,
+.btn-flickr.active,
 .open .dropdown-toggle.btn-flickr{
   border-color: #ff0084 !important;
 }
 
 .btn-foursquare,
-.btn-foursquare:hover, 
-.btn-foursquare:focus, 
-.btn-foursquare:active, 
-.btn-foursquare.active, 
+.btn-foursquare:hover,
+.btn-foursquare:focus,
+.btn-foursquare:active,
+.btn-foursquare.active,
 .open .dropdown-toggle.btn-foursquare{
   border-color: #0072b1 !important;
 }
 
 .btn-github,
-.btn-github:hover, 
-.btn-github:focus, 
-.btn-github:active, 
-.btn-github.active, 
+.btn-github:hover,
+.btn-github:focus,
+.btn-github:active,
+.btn-github.active,
 .open .dropdown-toggle.btn-github{
   border-color: #444 !important;
 }
 
 .btn-google-plus,
-.btn-google-plus:hover, 
-.btn-google-plus:focus, 
-.btn-google-plus:active, 
-.btn-google-plus.active, 
+.btn-google-plus:hover,
+.btn-google-plus:focus,
+.btn-google-plus:active,
+.btn-google-plus.active,
 .open .dropdown-toggle.btn-google-plus{
   border-color: #dd4b39 !important;
 }
 
 .btn-instagram,
-.btn-instagram:hover, 
-.btn-instagram:focus, 
-.btn-instagram:active, 
-.btn-instagram.active, 
+.btn-instagram:hover,
+.btn-instagram:focus,
+.btn-instagram:active,
+.btn-instagram.active,
 .open .dropdown-toggle.btn-instagram{
   border-color: #3f729b !important;
 }
 
 .btn-linkedin,
-.btn-linkedin:hover, 
-.btn-linkedin:focus, 
-.btn-linkedin:active, 
-.btn-linkedin.active, 
+.btn-linkedin:hover,
+.btn-linkedin:focus,
+.btn-linkedin:active,
+.btn-linkedin.active,
 .open .dropdown-toggle.btn-linkedin{
   border-color: #007bb6 !important;
 }
 
 .btn-microsoft,
-.btn-microsoft:hover, 
-.btn-microsoft:focus, 
-.btn-microsoft:active, 
-.btn-microsoft.active, 
+.btn-microsoft:hover,
+.btn-microsoft:focus,
+.btn-microsoft:active,
+.btn-microsoft.active,
 .open .dropdown-toggle.btn-microsoft{
   border-color: #2672ec !important;
 }
 
 .btn-openid,
-.btn-openid:hover, 
-.btn-openid:focus, 
-.btn-openid:active, 
-.btn-openid.active, 
+.btn-openid:hover,
+.btn-openid:focus,
+.btn-openid:active,
+.btn-openid.active,
 .open .dropdown-toggle.btn-openid{
   border-color: #f7931e !important;
 }
 
 .btn-reddit,
-.btn-reddit:hover, 
-.btn-reddit:focus, 
-.btn-reddit:active, 
-.btn-reddit.active, 
+.btn-reddit:hover,
+.btn-reddit:focus,
+.btn-reddit:active,
+.btn-reddit.active,
 .open .dropdown-toggle.btn-reddit{
   border-color: #eff7ff !important;
 }
 
 .btn-soundcloud,
-.btn-soundcloud:hover, 
-.btn-soundcloud:focus, 
-.btn-soundcloud:active, 
-.btn-soundcloud.active, 
+.btn-soundcloud:hover,
+.btn-soundcloud:focus,
+.btn-soundcloud:active,
+.btn-soundcloud.active,
 .open .dropdown-toggle.btn-soundcloud{
   border-color: #f50 !important;
 }
 
 .btn-tumblr,
-.btn-tumblr:hover, 
-.btn-tumblr:focus, 
-.btn-tumblr:active, 
-.btn-tumblr.active, 
+.btn-tumblr:hover,
+.btn-tumblr:focus,
+.btn-tumblr:active,
+.btn-tumblr.active,
 .open .dropdown-toggle.btn-tumblr{
   border-color: #2c4762 !important;
 }
 
 .btn-twitter,
-.btn-twitter:hover, 
-.btn-twitter:focus, 
-.btn-twitter:active, 
-.btn-twitter.active, 
+.btn-twitter:hover,
+.btn-twitter:focus,
+.btn-twitter:active,
+.btn-twitter.active,
 .open .dropdown-toggle.btn-twitter{
   border-color: #55acee !important;
 }
 
 .btn-vimeo,
-.btn-vimeo:hover, 
-.btn-vimeo:focus, 
-.btn-vimeo:active, 
-.btn-vimeo.active, 
+.btn-vimeo:hover,
+.btn-vimeo:focus,
+.btn-vimeo:active,
+.btn-vimeo.active,
 .open .dropdown-toggle.btn-vimeo{
   border-color: #1ab7ea !important;
 }
 
 .btn-vk,
-.btn-vk:hover, 
-.btn-vk:focus, 
-.btn-vk:active, 
-.btn-vk.active, 
+.btn-vk:hover,
+.btn-vk:focus,
+.btn-vk:active,
+.btn-vk.active,
 .open .dropdown-toggle.btn-vk{
   border-color: #587ea3 !important;
 }
 
 .btn-yahoo,
-.btn-yahoo:hover, 
-.btn-yahoo:focus, 
-.btn-yahoo:active, 
-.btn-yahoo.active, 
+.btn-yahoo:hover,
+.btn-yahoo:focus,
+.btn-yahoo:active,
+.btn-yahoo.active,
 .open .dropdown-toggle.btn-yahoo{
   border-color: #720e9e !important;
 }
@@ -3198,19 +3198,19 @@ a.guest-on i {
   padding-right: 20px;
 }
 
-input.spinner[type="text"], 
-input.spinner[type="password"], 
-input.spinner[type="datetime"], 
-input.spinner[type="datetime-local"], 
-input.spinner[type="date"], 
-input.spinner[type="month"], 
-input.spinner[type="time"], 
-input.spinner[type="week"], 
-input.spinner[type="number"], 
-input.spinner[type="email"], 
-input.spinner[type="url"], 
-input.spinner[type="search"], 
-input.spinner[type="tel"], 
+input.spinner[type="text"],
+input.spinner[type="password"],
+input.spinner[type="datetime"],
+input.spinner[type="datetime-local"],
+input.spinner[type="date"],
+input.spinner[type="month"],
+input.spinner[type="time"],
+input.spinner[type="week"],
+input.spinner[type="number"],
+input.spinner[type="email"],
+input.spinner[type="url"],
+input.spinner[type="search"],
+input.spinner[type="tel"],
 input.spinner[type="color"] {
     background: url("../img/input-spinner.gif") right no-repeat !important;
 }
@@ -3297,7 +3297,7 @@ input.spinner[type="color"] {
 
 /*
   ======================================
-  INDEX 
+  INDEX
   ======================================
 */
 
@@ -3310,7 +3310,7 @@ input.spinner[type="color"] {
 /* -- color classes -- */
 .coralbg {
     background-color: #34495e;
-} 
+}
 
 .coral {
     color: #FA396f;
@@ -3484,7 +3484,7 @@ div.user-menu div.user-menu-content:not(.active){
     margin-top: 20px;
     margin-bottom: 0;
 }
- 
+
 .caption {
     position:absolute;
     top:0;

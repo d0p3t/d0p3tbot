@@ -12,6 +12,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.2",
+    "cachegoose": "^3.0.2",
     "connect-ensure-login": "^0.1.1",
     "connect-flash": "^0.1.1",
     "discord.js": "^11.1.0",
@@ -20,6 +21,7 @@
     "express-session": "^1.15.3",
     "method-override": "^2.3.9",
     "mongoose": "^4.11.3",
+    "mongoose-cache-manager": "github:englercj/mongoose-cache-manager",
     "morgan": "^1.8.2",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",

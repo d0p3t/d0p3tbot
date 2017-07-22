@@ -27,12 +27,24 @@ block content
             form(role='form' method='post', action='').form-inline.edit-command
               .form-group
                 label.sr-only(for='name') Command name
-                input#editname.form-control(name='commandname', type='text', placeholder='Command name')
+                select#editname.form-control(name='commandname', type='text', placeholder='Command name' style='min-width: 200px; max-width: 200px;')
+                  for c in cmds
+                    option #{c.name}
               .form-group
                 label.sr-only(for='text') Command text
                 input#edittext.form-control(name='commandtext', type='text', placeholder='Command text')
               input.btn.btn-primary(type='submit', value='Add')          
-      
+        .col-md-4
+          .box
+            h4 Delete Command
+            hr
+            form(role='form' method='post', action='').form-inline.del-command
+              .form-group
+                label.sr-only(for='name') Command name
+                select#delname.form-control(name='commandname', type='text', placeholder='Command name' style='min-width: 400px; max-width: 400px;')
+                  for c in cmds
+                    option #{c.name}
+              input.btn.btn-danger(type='submit', value='Delete')         
       .row
         .col-md-12
           .box
@@ -50,11 +62,9 @@ block content
                   th
               tbody#commands
                 for c in cmds
-                  tr
+                  tr(name= c.name)
                     td #{c.name}
                     td.hidden-phone #{c.value}
                     td
-                      button.btn.btn-primary.btn-xs(data-original-title='', title='')
-                        i.fa.fa-pencil(data-original-title='', title='')
                       button.btn.btn-danger.btn-xs(data-original-title='', title='')
                         i.fa.fa-trash-o(data-original-title='', title='')

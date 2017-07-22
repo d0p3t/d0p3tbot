@@ -3,6 +3,7 @@ var router = express.Router();
 var passport = require('passport');
 let User = require('../models/user');
 let Command = require('../models/command');
+let Notice = require('../models/notice');
 const logger = require('../utils/logger');
 const config = require('../config/config');
 
@@ -28,11 +29,25 @@ router.get('/commands', require('connect-ensure-login').ensureLoggedIn(), (req, 
 });
 
 router.get('/notices', require('connect-ensure-login').ensureLoggedIn(), (req, res) => {
-  res.render('notices', { title: "d0p3tbot - Notices", message: "Notices"});
+  Notice.find(function(err, notices) {
+    res.render('notices', { title: "d0p3tbot - Notices", message: "Notices", nots: notices});
+  });
 });
 
 router.get('/alerts', require('connect-ensure-login').ensureLoggedIn(), (req, res) => {
   res.render('alerts', { title: "d0p3tbot - Alerts", message: "Alerts"});
+});
+
+router.get('/giveaways', require('connect-ensure-login').ensureLoggedIn(), (req, res) => {
+  res.render('giveaways', { title: "d0p3tbot - Giveaways", message: "Giveaways"});
+});
+
+router.get('/security', require('connect-ensure-login').ensureLoggedIn(), (req, res) => {
+  res.render('security', { title: "d0p3tbot - Security", message: "Security"});
+});
+
+router.get('/termsofservice', require('connect-ensure-login').ensureLoggedIn(), (req, res) => {
+  res.render('termsofservice', { title: "d0p3tbot - TOS", message: "TOS"});
 });
 
 router.get('/discord', require('connect-ensure-login').ensureLoggedIn(), (req, res) => {

@@ -147,7 +147,7 @@ html
             ul.nav.navbar-nav
               li.dropdown
                 a.dropdown-toggle(href='#', data-toggle='dropdown')
-                  img.img-circle.img-responsive.img-user(src='img/user.jpg')
+                  img#streamPhotoRight.img-circle.img-responsive.img-user(src='img/user.jpg')
                   strong @#{user.username}
                 ul.dropdown-menu.dropdown-login
                   li
@@ -155,7 +155,7 @@ html
                       .row
                         .col-lg-3
                           p.text-center
-                            img.img-responsive.img-circle(src='img/user.jpg')
+                            img#streamPhotoRightInner.img-responsive.img-circle(src='img/user.jpg')
                         .col-lg-9
                           p.text-left
                             strong John Doe
@@ -180,21 +180,21 @@ html
           // Sidebar user panel
           .user-panel
             // Nav tabs
-            ul.nav.nav-tabs(role='tablist')
-              li.active
-                a(href='#status', role='tab', data-toggle='tab')
-                  i.fa.fa-circle
-              li
-                a(href='#statistics', role='tab', data-toggle='tab')
-                  i.fa.fa-bar-chart-o
-              li
-                a(href='#profile', role='tab', data-toggle='tab')
-                  i.fa.fa-cog
+            //- ul.nav.nav-tabs(role='tablist')
+            //-   li.active
+            //-     a(href='#status', role='tab', data-toggle='tab')
+            //-       i.fa.fa-circle
+            //-   li
+            //-     a(href='#statistics', role='tab', data-toggle='tab')
+            //-       i.fa.fa-bar-chart-o
+            //-   li
+            //-     a(href='#profile', role='tab', data-toggle='tab')
+            //-       i.fa.fa-cog
             // Tab panes
             .tab-content
               #status.tab-pane.active
                 .image
-                  img.img-circle(src='img/user.jpg', alt='User Image')
+                  img#streamPhoto.img-circle(src='img/user.jpg', alt='User Image')
                 .info
                   p Stream 
                     span#streamStatus Offline
@@ -234,26 +234,86 @@ html
                     a(href='#') Got 320 Points
           // sidebar menu: : style can be found in sidebar.less
           ul.sidebar-menu
-            li.active
-              a(href='/dashboard')
-                i.fa.fa-dashboard
-                span Dashboard
-            li
-              a(href='/commands')
-                i.fa.fa-cog
-                span Commands
-            li
-              a(href='/notices')
-                i.fa.fa-bar-chart-o
-                span Notices
-            li
-              a(href='/alerts')
-                i.fa.fa-exclamation
-                span Alerts
-            li
-              a(href='/discord')
-                i.fa.fa-microphone
-                span Discord
+            if message == "Dashboard"
+              li.active
+                a(href='/dashboard')
+                  i.fa.fa-dashboard
+                  span Dashboard                
+            else
+              li
+                a(href='/dashboard')
+                  i.fa.fa-dashboard
+                  span Dashboard
+            if message == "Commands"
+              li.active
+                a(href='/commands')
+                  i.fa.fa-cog
+                  span Commands                
+            else
+              li
+                a(href='/commands')
+                  i.fa.fa-cog
+                  span Commands
+            if message == "Notices"
+              li.active
+                a(href='/notices')
+                  i.fa.fa-bar-chart-o
+                  span Notices            
+            else
+              li
+                a(href='/notices')
+                  i.fa.fa-bar-chart-o
+                  span Notices
+            if message == "Alerts"
+              li.active
+                a(href='/alerts')
+                  i.fa.fa-exclamation
+                  span Alerts
+            else
+              li
+                a(href='/alerts')
+                  i.fa.fa-exclamation
+                  span Alerts
+            if message == "Discord"
+              li.active
+                a(href='/giveaways')
+                  i.fa.fa-gift
+                  span Giveaways
+            else
+              li
+                a(href='/giveaways')
+                  i.fa.fa-gift
+                  span Giveaways   
+            if message == "Discord"
+              li.active
+                a(href='/security')
+                  i.fa.fa-shield
+                  span Security
+            else
+              li
+                a(href='/security')
+                  i.fa.fa-shield
+                  span Security
+            if message == "Discord"
+              li.active
+                a(href='/discord')
+                  i.fa.fa-microphone
+                  span Discord
+            else
+              li
+                a(href='/discord')
+                  i.fa.fa-microphone
+                  span Discord
+            if message == "TOS"
+              li.active
+                a(href='/termsofservice')
+                  i.fa.fa-print
+                  span Terms of Service
+            else
+              li
+                a(href='/termsofservice')
+                  i.fa.fa-print
+                  span Terms of Service
       // end:left sidebar
       // start:right sidebar
       block content        

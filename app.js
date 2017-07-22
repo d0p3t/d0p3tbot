@@ -26,7 +26,7 @@ db.on('error', function(err){
 
 // Init bots
 twitch();
-discord();
+//discord();
 
 // Init App
 const app = express();
@@ -69,6 +69,7 @@ app.use('/', routes);
 
 
 const Command = require('./models/command');
+const Notice = require('./models/notice');
 
 io.on('connection', function (socket) {
   logger.info("[Socket] Client Connected.");
@@ -93,6 +94,106 @@ io.on('connection', function (socket) {
       command: data
     });
   });
+
+  socket.on('edit command', function(data) {
+    Command.findOne({ name: data.name },function(err, cmd) {
+      if(err) {
+        logger.error('[Database] Error finding command (edit) | ' + err);
+      }
+      cmd.value = data.value;
+      cmd.updated_at = Date.now();
+
+      cmd.save(function(err, done) {
+        if(err) {
+          logger.error('[Database] Error editing command | ' + err);
+        }
+      })
+    });
+
+    // populate table with new command
+    socket.emit('update edit command table', {
+      command: data
+    });
+  });
+
+  socket.on('del command', function(data) {
+    Command.findOne({ name: data.name },function(err, cmd) {
+      if(err) {
+        logger.error('[Database] Error finding command (del) | ' + err);
+      }
+
+      cmd.remove(function(err, done) {
+        if(err) {
+          logger.error('[Database] Error removing command | ' + err);
+        }
+      })
+    });
+
+    // populate table with new command
+    socket.emit('update del command table', {
+      command: data
+    });
+  });
+
+  socket.on('add notice', function(data) {
+    var not = new Notice({
+      name: data.name,
+      value: data.value,
+      created_at: Date.now(),
+      updated_at: Date.now()
+    });
+    not.save(function(err, done) {
+      if(err) {
+        logger.error('[Database] Error adding notice | ' + err);
+      }
+    });
+
+    // populate table with new command
+    socket.emit('update notice table', {
+      notice: data
+    });
+  });
+
+  socket.on('edit notice', function(data) {
+    Notice.findOne({ name: data.name },function(err, not) {
+      if(err) {
+        logger.error('[Database] Error finding notice (edit) | ' + err);
+      }
+      not.value = data.value;
+      not.updated_at = Date.now()
+
+      not.save(function(err, done) {
+        if(err) {
+          logger.error('[Database] Error editing notice | ' + err);
+        }
+      })
+    });
+
+    // populate table with new command
+    socket.emit('update edit notice table', {
+      notice: data
+    });
+  });
+
+  socket.on('del notice', function(data) {
+    Notice.findOne({ name: data.name },function(err, not) {
+      if(err) {
+        logger.error('[Database] Error finding notice (del) | ' + err);
+      }
+
+      not.remove(function(err, done) {
+        if(err) {
+          logger.error('[Database] Error removing notice | ' + err);
+        }
+      })
+    });
+
+    // populate table with new command
+    socket.emit('update del notice table', {
+      notice: data
+    });
+  });
+
 
   socket.on('update stream info', function(data) {
     request.get({

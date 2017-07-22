@@ -1,0 +1,39 @@
+extends layout
+
+block content
+  aside.right-side
+    section.content
+      h1
+        | #{message}
+        small Control panel
+      // start:content
+      .row
+        .col-md-6
+          .box
+            h4 Spam protection
+        .col-md-6
+          section.panel
+            header.panel-heading Link protection
+            .panel-body
+              .form-group
+                .col-lg-12
+                  .input-group.m-bot15
+                    input.form-control
+                    span.input-group-btn
+                      button.btn.btn-primary(type='button', data-original-title, title) Whitelist
+              table.table.table-striped.table-advance.table-hover#linksprotection
+                thead
+                  tr
+                    th
+                      i(data-original-title='', title='')
+                      |  Link
+    
+      .row
+        .col-md-6
+          .box
+            h4 Blacklisted Words
+            .input-group.m-bot15
+              input.form-control
+              span.input-group-btn
+                button.btn.btn-primary(type='button', data-original-title, title) Add
+      // end:content

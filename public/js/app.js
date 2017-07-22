@@ -2,7 +2,6 @@ $(document).ready(function () {
   $('#escalation').dataTable( {
       "aaSorting": [[ 4, "asc" ]]
   });
-
   socket.emit('update stream info');
 });
 
@@ -22,12 +21,14 @@ socket.on('update command table', function(data) {
 
 socket.on('stream info change', function(data) {
   // change values with data
-  if(data) {
-    document.getElementById("streamStatus").innerHTML = "Online";
-    document.getElementById("streamViewers").innerHTML = "" + data.info.status +"";
+  console.log(data);
+  if(data.info.stream == null) {
+    document.getElementById("streamStatus").innerHTML = "Offline";
+    document.getElementById("streamViewers").innerHTML = "0";
   }
   else {
-    $('#streamStatus').text = "Offline";
+    document.getElementById("streamStatus").innerHTML = "Online";
+    document.getElementById("streamViewers").innerHTML = "" + data.info.stream.viewers +"";
   }
 });
 
@@ -45,5 +46,9 @@ $('.add-command').submit(function(){
   });
   // Empty the form
   $(this).find("#name, #text").val('');
- return false;
+  return false;
+});
+
+$('.del-command').submit(function(){
+  console.log("Deleting command");
 });

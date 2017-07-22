@@ -8,7 +8,7 @@ block content
         small Control panel
       // start:content
       .row
-        .col-md-8
+        .col-md-4
           .box
             h4 Add Command
             hr
@@ -20,6 +20,19 @@ block content
                 label.sr-only(for='text') Command text
                 input#text.form-control(name='commandtext', type='text', placeholder='Command text')
               input.btn.btn-primary(type='submit', value='Add')                
+        .col-md-4
+          .box
+            h4 Edit Command
+            hr
+            form(role='form' method='post', action='').form-inline.edit-command
+              .form-group
+                label.sr-only(for='name') Command name
+                input#editname.form-control(name='commandname', type='text', placeholder='Command name')
+              .form-group
+                label.sr-only(for='text') Command text
+                input#edittext.form-control(name='commandtext', type='text', placeholder='Command text')
+              input.btn.btn-primary(type='submit', value='Add')          
+      
       .row
         .col-md-12
           .box

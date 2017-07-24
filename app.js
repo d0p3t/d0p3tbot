@@ -197,7 +197,7 @@ io.on('connection', function (socket) {
 
   socket.on('update stream info', function(data) {
     request.get({
-      url: 'https://api.twitch.tv/kraken/streams/' + config.discord.twitchchannel,
+      url: 'https://api.twitch.tv/kraken/streams/' + config.defaults.username,
       headers: {
           'Client-ID': config.tmi.options.clientId
       }

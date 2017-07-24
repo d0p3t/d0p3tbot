@@ -1,8 +1,10 @@
 const logger = require('../utils/logger');
 const config = require('../config/config.js');
 const tmi = require('tmi.js');
+const request = require('request');
 const Command = require('../models/command');
 const Notice = require('../models/notice');
+const User = require('../models/user');
 
 // TMI.js
 const client = new tmi.client(config.tmi);
@@ -19,14 +21,14 @@ var twitch = function() {
     setInterval(function(){
       Command.find({}, function(err, cmds) {
         if(err)
-          logger.info('[Database] Error retrieving commands | ' + err);
+          logger.error('[Database] Error retrieving commands | ' + err);
         for (var i in cmds)
           commands[i] = cmds[i];
       });
 
       Notice.find({}, function(err, nots) {
         if(err)
-          logger.info('[Database] Error retrieving notices | ' + err);
+          logger.error('[Database] Error retrieving notices | ' + err);
         for (var i in nots)
           notices[i] = nots[i];
       });
@@ -53,15 +55,38 @@ var twitch = function() {
         logger.info('[Twitch] Successfully connected to channel ' + config.tmi.channels);
         Command.find({}, function(err, cmds) {
           if(err)
-            logger.info('[Database] Error retrieving commands | ' + err);
+            logger.error('[Database] Error retrieving commands | ' + err);
           for (var i in cmds)
             commands[i] = cmds[i];
         });
         Notice.find({}, function(err, nots) {
           if(err)
-            logger.info('[Database] Error retrieving notices | ' + err);
+            logger.error('[Database] Error retrieving notices | ' + err);
           for (var i in nots)
             notices[i] = nots[i];
+        });
+        User.findOne({ username: config.defaults.username, admin: true}, function(err, users) {
+          if(err)
+            logger.error('[Database] Error retrieving users | ' + err);
+          if(!users) {
+            logger.info('[Database] No Admin user found, creating Admin user');
+            var newUser = new User({
+              name: config.defaults.username,
+              username: config.defaults.username,
+              password: 'defaultpassword',
+              admin: true,
+              created_at: Date.now(),
+              updated_at: Date.now()
+            });
+            newUser.save(function(err, done) {
+              if(err)
+                logger.error('[Database] Error saving a new Admin user | ' + err);
+              else
+                logger.info('[Database] Created new Admin user (password: defaultpassword)');
+            });
+          }
+          else
+            logger.info('[Database] Admin user already created');
         });
     });
     // -------------------------------

@@ -49,14 +49,9 @@ genTwitterTokens/classes/generatetwittertokens
 .idea
 *.iml
 
-# Netbeans Project files
-nbproject
-
-# Eclipse Project files
-
 # Custom ignores
 node_modules/
 config/config.js
-logs/*
+logs/*.log
 package-lock.json
 todolist.txt

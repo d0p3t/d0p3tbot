@@ -1,6 +1,6 @@
 <div align="center">
 
-# d0p3tbot
+# d0p3tbot (v0.0.1-alpha)
 
 <img src="http://i.imgur.com/suOPO9z.png" width="662px" height="200px">
 
@@ -9,26 +9,25 @@
 ![Version](https://img.shields.io/badge/version-0.0.1-green.svg) [![Build Status](https://travis-ci.org/d0p3t/d0p3tbot.svg?branch=master)](https://travis-ci.org/d0p3t/d0p3tbot) [![Discord](https://img.shields.io/discord/330910293934997504.svg)](https://discord.gg/bSd4cYJ) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
 
 ### A lot of the current features are specifically designed for the [demo environment](#demo) and are currently **in development**!
-### This bot work on Windows, OSX and Linux as long as you have NodeJS and NPM installed.
+### This bot works on Windows, OSX and Linux as long as you have NodeJS, NPM and MongoDB installed.
 
 </div>
 
 ## Demo
-A working demo can be found running on [Twitch](https://twitch.tv/d0p3t) and on [Discord](https://discord.gg/bSd4cYJ)
+A working demo can be found running on [Twitch](https://twitch.tv/d0p3t) and on [Discord](https://discord.gg/bSd4cYJ). Keep in mind that the demo does not run the latest version and access to the frontend is not allowed (yet).
 
 - Type `!commands` to get a list of the available chat commands on Twitch
 
 ---
 
 ## Features
-* Simple commands with bot reply
-* Automatic chat message on subscription/resubscription
-* Subscriber count command
-* Followage command
-* Uptime command
-* Notices every X messages
+* Twitch: Basic commands (i.e. !uptime, !subcount, !commands)
+* Twitch: Custom commands
+* Twitch: Automatic chat alerts on subscription/resubscription
+* Twitch: Notices every X messages
 * Discord: Live announcements. [example](http://i.imgur.com/squmt3C.png)
-
+* Persistent Database using mongoDB data storage
+* Frontend dashboard and control panel
 ---
 
 ## Setup
@@ -41,18 +40,24 @@ Next, copy and rename `config_sample.js` to `config.js` and edit it according to
 ---
 
 ## Usage
-After cloning the repository and installing all dependencies and creating a config file you can run the application with `npm start`. The bot will join the configured Twitch channel and listen for events/messages.
+After cloning the repository, installing all dependencies and creating a config file you can run the application with `gulp serve`. The bot will join the configured Twitch/Discord channel and listen for events/messages.
 
-Available commands include: *!uptime, !followage, !subcount, !social, !twitter, !discord*
+Available basic commands include: *!uptime, !followage, !subcount, !so*
+
+Frontend: `http://localhost:3000` with `username` set to your Twitch name and `password` set to `defaultpassword`.
 
 ---
 
 ## Upcoming Features
 * Frontend ***In Progress***
 * Multi-user support
+* Security Improvements
 * AI chat (conversational bot)
 * Create own API for !subcount !followage !uptime to reduce `beta.decapi.me` dependancy
 * Commands for Discord
+* And lots more...
+
+Implementation of these features is streamed live every Saturday & Sunday at twitch.tv/d0p3t
 
 ---
 

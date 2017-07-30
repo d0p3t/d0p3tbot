@@ -57,7 +57,7 @@ Frontend: `http://localhost:3000` with `username` set to your Twitch name and `p
 * Commands for Discord
 * And lots more...
 
-Implementation of these features is streamed live every Saturday & Sunday at twitch.tv/d0p3t
+Implementation of these features is streamed live every Saturday & Sunday at [twitch.tv/d0p3t](https://twitch.tv/d0p3t)
 
 ---
 

@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 const logger = require('./utils/logger');
 const config = require('./config/config');
+const favicon = require('serve-favicon');
+const path = require('path');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
@@ -9,6 +11,7 @@ const twitch = require('./utils/twitch');
 const express = require('express');
 const flash = require('connect-flash');
 const session = require('express-session');
+const mongoDBStore = require('connect-mongodb-session')(session);
 const passport = require('passport');
 const mongoose = require('mongoose');
 const request = require('request');
@@ -17,34 +20,44 @@ mongoose.connect("mongodb://" + config.db.uri + "", config.db.options);
 let db = mongoose.connection;
 
 db.once('open', function(){
-  logger.info('[Database] Connected to MongoDB');
+  logger.info('[Database] Successfully connected to MongoDB.');
 });
 
 db.on('error', function(err){
-  logger.error(err);
+  logger.error('[Database] Error connecting to MongoDB, please check your database configuration.');
 });
 
-// Init bots
 twitch();
 //discord();
 
-// Init App
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io').listen(server);
+const store = new mongoDBStore({
+    uri: 'mongodb://' + config.db.uri,
+    collection: 'sessionsStorage'
+  });
+
+store.on('error', function(error) {
+  logger.error("[Session] Error with session storage | " + err);
+});
 
 app.set('port', process.env.PORT || 3000);
 app.set('views', './views');
 app.set('view engine', 'pug');
 
 app.use(express.static(__dirname + '/public'));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
+
 app.use(bodyParser.urlencoded({'extended':'true'}));
 app.use(bodyParser.json());
 app.use(methodOverride());
-app.use(morgan('combined',({ "stream": logger.stream })));
+app.use(morgan('tiny',({ "stream": logger.stream })));
 
 app.use(session({
   secret: 'q435t799byq349tb943t6',
+  cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 },
+  store: store,
   resave: true,
   saveUninitialized: true
 }));
@@ -64,15 +77,19 @@ app.get('*', function(req, res, next) {
   next();
 });
 
-let routes = require('./routes');
+// Routes
+const routes = require('./routes');
 app.use('/', routes);
 
-
+// Sockets
 const Command = require('./models/command');
 const Notice = require('./models/notice');
+const Alert = require('./models/alert');
+const Variable = require('./models/variable');
+
 
 io.on('connection', function (socket) {
-  logger.info("[Socket] Client Connected.");
+  logger.debug("[Socket] Client Connected.");
 
 
   socket.on('add command', function(data) {
@@ -194,6 +211,42 @@ io.on('connection', function (socket) {
     });
   });
 
+  socket.on('edit alert', function(data) {
+    Alert.findOne({ name: data.name },function(err, alert) {
+      if(err) {
+        logger.error('[Database] Error finding alert | ' + err);
+      }
+      alert.value = data.value;
+      alert.updated_at = Date.now();
+
+      alert.save(function(err, done) {
+        if(err) {
+          logger.error('[Database] Error editing alert | ' + err);
+        }
+      });
+    });
+
+    // populate table with new command
+    socket.emit('update edit alert table', {
+      alert: data
+    });
+  });
+
+  socket.on('edit notices settings', function(data) {
+    Variable.findOne({ name: data.name },function(err, variable) {
+      if(err) {
+        logger.error('[Database] Error finding variable | ' + err);
+      }
+      variable.value = data.value;
+      variable.updated_at = Date.now();
+
+      variable.save(function(err, done) {
+        if(err) {
+          logger.error('[Database] Error editing variable | ' + err);
+        }
+      });
+    });
+  });
 
   socket.on('update stream info', function(data) {
     request.get({
@@ -212,5 +265,5 @@ io.on('connection', function (socket) {
 });
 
 server.listen(app.get('port'), function() {
-  logger.info('[Express] Listening on port ' + app.get('port') + '!');
+  logger.info('[General] Server listening on port ' + app.get('port') + '!');
 });

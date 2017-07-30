@@ -54,4 +54,4 @@ node_modules/
 config/config.js
 logs/*.log
 package-lock.json
-todolist.txt
+todolist.md

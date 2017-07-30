@@ -7,6 +7,7 @@ const UserSchema = mongoose.Schema({
   admin: Boolean,
   meta: {
     last_login: Date,
+    profile_picture: String,
     theme_color: String
   },
   created_at: Date,

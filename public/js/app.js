@@ -1,7 +1,26 @@
 $(document).ready(function () {
   $('#escalation').dataTable( {
-      "aaSorting": [[ 4, "asc" ]]
+    bFilter: false,
+    bLengthChange: false,
+    "aaSorting": [[ 0, "asc" ]]
   });
+
+  $('#escalation2').dataTable( {
+    bFilter: false,
+    bLengthChange: false,
+    bSort: false,
+    bInfo: false,
+    bPaginate: false
+  });
+
+  $('#escalation3').dataTable( {
+    bFilter: false,
+    bLengthChange: false,
+    bSort: false,
+    bInfo: false,
+    bPaginate: false
+  });
+
   socket.emit('update stream info');
 });
 
@@ -32,7 +51,6 @@ socket.on('update notice table', function(data) {
 socket.on('update edit command table', function(data) {
   var x = document.getElementsByName(''+ data.command.name + '')[0];
   x.getElementsByTagName("td")[1].innerHTML = "" + data.command.value + "";
-
 });
 
 socket.on('update del command table', function(data) {
@@ -42,17 +60,18 @@ socket.on('update del command table', function(data) {
 socket.on('update edit notice table', function(data) {
   var x = document.getElementsByName(''+ data.notice.name + '')[0];
   x.getElementsByTagName("td")[1].innerHTML = "" + data.notice.value + "";
-
 });
 
 socket.on('update del notice table', function(data) {
   var x = document.getElementsByName(''+ data.notice.name + '')[0].remove();
 });
 
+socket.on('update edit alert table', function(data) {
+  var x = document.getElementsByName(''+ data.alert.name + '')[0];
+  x.getElementsByTagName("td")[1].innerHTML = "" + data.alert.value + "";
+});
+
 socket.on('stream info change', function(data) {
-  // change values with data
-  //console.log(data);
-  console.log(data.info.stream.channel.logo);
   if(data.info.stream == null) {
     document.getElementById("streamStatus").innerHTML = "Offline";
     document.getElementById("streamViewers").innerHTML = "0";
@@ -138,5 +157,27 @@ $('.del-notice').submit(function(){
   });
 
   $(this).find("#delname").val('');
+  return false;
+});
+
+$('.edit-alert').submit(function(){
+  console.log("Editing alert");
+  // Send the message to the server
+  socket.emit("edit alert", {
+   "name": $(this).find("#editname_a").val(),
+   "value": $(this).find("#edittext_a").val()
+  });
+  // Empty the form
+  $(this).find("#edittext_a").val('');
+  return false;
+});
+
+$('.edit-notice-settings').submit(function(){
+  console.log("Editing notice settings");
+  // Send the message to the server
+  socket.emit("edit notices settings", {
+   "name": $(this).find("#editname_v").val(),
+   "value": $(this).find("#editvalue_v").val()
+  });
   return false;
 });

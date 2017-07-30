@@ -7,6 +7,7 @@ var logger = new winston.Logger({
       level: 'debug',
       handleExceptions: true,
       json: false,
+      prettyPrint: true,
       colorize: true
     }),
     new (winston.transports.File)({

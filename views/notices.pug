@@ -33,7 +33,7 @@ block content
               .form-group
                 label.sr-only(for='text') Notice text
                 input#edittext.form-control(name='noticetext', type='text', placeholder='notice text')
-              input.btn.btn-primary(type='submit', value='Add')          
+              input.btn.btn-primary(type='submit', value='Edit')          
         .col-md-4
           .box
             h4 Delete Notice
@@ -41,10 +41,34 @@ block content
             form(role='form' method='post', action='').form-inline.del-notice
               .form-group
                 label.sr-only(for='name') Notice name
-                select#delname.form-control(name='noticename', type='text', placeholder='notice name' style='min-width: 400px; max-width: 400px;')
+                select#delname.form-control(name='noticename', type='text', placeholder='notice name')
                   for c in nots
                     option #{c.name}
               input.btn.btn-danger(type='submit', value='Delete')         
+      .row
+        .col-md-12
+          .box
+            h4 Settings
+            hr
+            form(role='form' method='post', action='').form-inline.edit-notice-settings
+              .form-group
+                label.sr-only(for='name') Variable
+                select#editname_v.form-control(name='noticevarname', type='text', placeholder='variable')
+                  for v in vars
+                    if(v.category==="notices")
+                      option(value=v.name) #{v.name}
+              .form-group
+                label.sr-only(for='text') Value
+                select#editvalue_v.form-control(name='noticevarvalue', type='text', placeholder='value')
+                  each val in [5,10,25,50,75,100]
+                    option(value=val)= val
+              input.btn.btn-primary(type='submit', value='Change')   
+              script(type="text/javascript").
+                $(document).ready(function () {
+                  var varsetting = !{vars[0].value}
+                  console.log(varsetting)
+                  $(`select[name='noticevarvalue'] option:contains(${varsetting})`).attr("selected", "selected");
+                });           
       .row
         .col-md-12
           .box

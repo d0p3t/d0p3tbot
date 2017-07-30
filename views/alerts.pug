@@ -5,10 +5,41 @@ block content
     section.content
       h1
         | #{message}
-        small Control panel
+        small Alerts
       // start:content
+      .row  
+        .col-md-8
+          .box
+            h4 Edit Alert
+            hr
+            form(role='form' method='post', action='').form-inline.edit-alert
+              .form-group
+                label.sr-only(for='name') Alert type
+                select#editname_a.form-control(name='alerttype', type='text', placeholder='Alert type' style='min-width: 200px; max-width: 200px;')
+                  for a in alerts
+                    option #{a.name}
+              .form-group
+                label.sr-only(for='text') Alert message
+                input#edittext_a.form-control(name='alertmessage', type='text', placeholder='Alert message' style='min-width: 500px;')
+              input.btn.btn-primary(type='submit', value='Edit')
       .row
         .col-md-12
-          .box.blank-page
-            | Stuff goes here.
-      // end:content
+          .box
+            h4 Chat Alerts List
+            hr
+            table.table.table-striped.table-advance.table-hover#escalation3
+              thead
+                tr
+                  th
+                    |  Type
+                  th.hidden-phone
+                    |  Description
+                  th
+              tbody#alerts
+                for a in alerts
+                  tr(name= a.name)
+                    td #{a.name}
+                    td.hidden-phone #{a.value}
+                    td
+                      button.btn.btn-danger.btn-xs(data-original-title='', title='')
+                        i.fa.fa-trash-o(data-original-title='', title='') 

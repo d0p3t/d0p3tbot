@@ -5,7 +5,7 @@ block content
     section.content
       h1
         | #{message}
-        small Control panel
+        small Custom
       // start:content
       .row
         .col-md-4
@@ -33,7 +33,7 @@ block content
               .form-group
                 label.sr-only(for='text') Command text
                 input#edittext.form-control(name='commandtext', type='text', placeholder='Command text')
-              input.btn.btn-primary(type='submit', value='Add')          
+              input.btn.btn-primary(type='submit', value='Edit')          
         .col-md-4
           .box
             h4 Delete Command
@@ -46,19 +46,17 @@ block content
                     option #{c.name}
               input.btn.btn-danger(type='submit', value='Delete')         
       .row
-        .col-md-12
+        .col-md-8
           .box
-            h4 Commands List
+            h4 Custom Commands List
             hr
             table.table.table-striped.table-advance.table-hover#escalation
               thead
                 tr
                   th
-                    i.fa.fa-bullhorn(data-original-title='', title='')
                     |  Name
                   th.hidden-phone
-                    i.fa.fa-comments(data-original-title='', title='')
-                    |  Text
+                    |  Description
                   th
               tbody#commands
                 for c in cmds
@@ -68,3 +66,34 @@ block content
                     td
                       button.btn.btn-danger.btn-xs(data-original-title='', title='')
                         i.fa.fa-trash-o(data-original-title='', title='')
+        .col-md-4
+          .box
+            h4 Basic Commands List
+            hr
+            table.table.table-striped.table-advance.table-hover#escalation2
+              thead
+                tr
+                  th
+                    |  Name
+                  th
+              tbody#defaultcommands
+                  tr(name= "!commands")
+                    td !commands
+                    td
+                      button.btn.btn-danger.btn-xs(data-original-title='', title='')
+                        i.fa.fa-toggle-on(data-original-title='', title='')
+                  tr(name= "!followage")
+                    td !followage
+                    td
+                      button.btn.btn-danger.btn-xs(data-original-title='', title='')
+                        i.fa.fa-toggle-on(data-original-title='', title='')                          
+                  tr(name= "!subcount")
+                    td !subcount
+                    td
+                      button.btn.btn-danger.btn-xs(data-original-title='', title='')
+                        i.fa.fa-toggle-on(data-original-title='', title='')
+                  tr(name= "!uptime")
+                    td !uptime
+                    td
+                      button.btn.btn-danger.btn-xs(data-original-title='', title='')
+                        i.fa.fa-toggle-on(data-original-title='', title='')      

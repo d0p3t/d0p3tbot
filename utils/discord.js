@@ -36,7 +36,7 @@ var discord = function() {
                     logger.info('[Database] Error finding announcement channel variable | ' + err);
                   else {
                     var embed = new Discord.RichEmbed()
-                        .setAuthor(config.defaults.username + " is LIVE on Twitch.TV!",body.stream.channel.logo)
+                        .setAuthor("@everyone, " + config.defaults.username + " is LIVE on Twitch.TV!",body.stream.channel.logo)
                         .setTitle("Watch now! " + body.stream.channel.url)
                         .addField("Now Playing", body.stream.channel.game)
                         .setColor(0xFFA500)

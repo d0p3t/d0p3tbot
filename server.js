@@ -86,7 +86,8 @@ const Command = require('./models/command');
 const Notice = require('./models/notice');
 const Alert = require('./models/alert');
 const Variable = require('./models/variable');
-
+const Link = require('./models/link');
+const Word = require('./models/word');
 
 io.on('connection', function (socket) {
   logger.debug("[Socket] Client Connected.");
@@ -245,6 +246,78 @@ io.on('connection', function (socket) {
           logger.error('[Database] Error editing variable | ' + err);
         }
       });
+    });
+  });
+
+  socket.on('add word to blacklist', function(data) {
+    var word = new Word({
+      value: data.value,
+      created_at: Date.now(),
+      updated_at: Date.now()
+    });
+    word.save(function(err, done) {
+      if(err) {
+        logger.error('[Database] Error adding word to blacklist | ' + err);
+      }
+    });
+
+    socket.emit('update add blacklist word table', {
+      word: data
+    });
+  });
+
+  socket.on('del word', function(data) {
+    Word.findOne({ value: data.value },function(err, word) {
+      if(err) {
+        logger.error('[Database] Error finding word (del) | ' + err);
+      }
+
+      word.remove(function(err, done) {
+        if(err) {
+          logger.error('[Database] Error removing word | ' + err);
+        }
+      })
+    });
+
+    // populate table with new command
+    socket.emit('update del word table', {
+      word: data
+    });
+  });
+
+  socket.on('add link to whitelist', function(data) {
+    var link = new Link({
+      value: data.value,
+      created_at: Date.now(),
+      updated_at: Date.now()
+    });
+    link.save(function(err, done) {
+      if(err) {
+        logger.error('[Database] Error adding link to whitelist | ' + err);
+      }
+    });
+
+    socket.emit('update add whitelist link table', {
+      link: data
+    });
+  });
+
+  socket.on('del link', function(data) {
+    Link.findOne({ value: data.value },function(err, link) {
+      if(err) {
+        logger.error('[Database] Error finding link (del) | ' + err);
+      }
+
+      link.remove(function(err, done) {
+        if(err) {
+          logger.error('[Database] Error removing link | ' + err);
+        }
+      })
+    });
+
+    // populate table with new command
+    socket.emit('update del link table', {
+      link: data
     });
   });
 

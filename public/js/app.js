@@ -71,6 +71,30 @@ socket.on('update edit alert table', function(data) {
   x.getElementsByTagName("td")[1].innerHTML = "" + data.alert.value + "";
 });
 
+socket.on('update add blacklist word table', function(data) {
+  var newRow = $('<tr name="' + data.word.value +'">');
+  var cols = "";
+  cols += '<td>' + data.word.value + '</td>';
+  newRow.append(cols);
+  $('#blacklist').append(newRow);
+});
+
+socket.on('update add whitelist link table', function(data) {
+  var newRow = $('<tr name="' + data.link.value +'">');
+  var cols = "";
+  cols += '<td>' + data.link.value + '</td>';
+  newRow.append(cols);
+  $('#whitelist').append(newRow);
+});
+
+socket.on('update del link table', function(data) {
+  var x = document.getElementsByName(''+ data.link.value + '')[0].remove();
+});
+
+socket.on('update del word table', function(data) {
+  var x = document.getElementsByName(''+ data.word.value + '')[0].remove();
+});
+
 socket.on('stream info change', function(data) {
   if(data.info.stream == null) {
     document.getElementById("streamStatus").innerHTML = "Offline";
@@ -179,5 +203,49 @@ $('.edit-notice-settings').submit(function(){
    "name": $(this).find("#editname_v").val(),
    "value": $(this).find("#editvalue_v").val()
   });
+  return false;
+});
+
+$('.add-link').submit(function(){
+  console.log("Adding link to whitelist");
+  // Send the message to the server
+  socket.emit("add link to whitelist", {
+   "value": $(this).find("#linkvalue").val()
+  });
+  // Empty the form
+  $(this).find("#linkvalue").val('');
+  return false;
+});
+
+$('.del-link').submit(function(){
+  console.log("Deleting link");
+
+  socket.emit("del link", {
+    "value": $(this).find("#deletelink").val()
+  });
+
+  $(this).find("#deletelink").val('');
+  return false;
+});
+
+$('.add-word').submit(function(){
+  console.log("Adding word to blacklist");
+  // Send the message to the server
+  socket.emit("add word to blacklist", {
+   "value": $(this).find("#addword").val()
+  });
+  // Empty the form
+  $(this).find("#addword").val('');
+  return false;
+});
+
+$('.del-word').submit(function(){
+  console.log("Deleting word");
+
+  socket.emit("del word", {
+    "value": $(this).find("#deleteword").val()
+  });
+
+  $(this).find("#deleteword").val('');
   return false;
 });

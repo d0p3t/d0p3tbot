@@ -8,32 +8,77 @@ block content
         small Control panel
       // start:content
       .row
-        .col-md-6
+        .col-md-4
           .box
-            h4 Spam protection
-        .col-md-6
-          section.panel
-            header.panel-heading Link protection
-            .panel-body
+            h4 Blacklist Words
+            hr
+            form(role='form' method='post', action='').form-inline.add-word
               .form-group
                 .col-lg-12
                   .input-group.m-bot15
-                    input.form-control
+                    input#addword.form-control(name='blacklistword', type='text', placeholder='Blacklist Word')
+                    span.input-group-btn  
+                      input.btn.btn-primary(type='submit', value='Add')                     
+            form(role='form' method='post', action='').form-inline.del-word
+              .form-group
+                .col-lg-12
+                  .input-group.m-bot15
+                    select#deleteword.form-control(name='deleteword', type='text', placeholder='Delete Word')
+                      for word in blacklist
+                        option #{word.value}
                     span.input-group-btn
-                      button.btn.btn-primary(type='button', data-original-title, title) Whitelist
-              table.table.table-striped.table-advance.table-hover#linksprotection
-                thead
-                  tr
-                    th
-                      i(data-original-title='', title='')
-                      |  Link
-    
-      .row
-        .col-md-6
+                      input.btn.btn-danger(type='submit', value='Delete')       
+            form(role='form' method='post', action='').form-inline.set-bltimeout
+              .form-group
+                .col-lg-12
+                  label(for='bltimeout') Timeout in Seconds
+                  .input-group.m-bot15
+                    select#bltimeout.form-control(name='bltimeout', type='text', placeholder='600')
+                      each val in [5,10,30,60,120,180,300,600,3600]
+                        option(name= val)= val 
+                    span.input-group-btn
+                      input.btn.btn-info(type='submit', value='Set')                                             
+            table.table.table-striped.table-advance.table-hover#wordsprotection
+              thead
+                tr
+                  th
+                    i(data-original-title='', title='')
+                    |  Blacklisted Words
+              tbody#blacklist
+                for word in blacklist
+                  tr(name= word.value)
+                    td #{word.value}
+        .col-md-4
           .box
-            h4 Blacklisted Words
-            .input-group.m-bot15
-              input.form-control
-              span.input-group-btn
-                button.btn.btn-primary(type='button', data-original-title, title) Add
+            h4 Link protection
+            hr
+            form(role='form' method='post', action='').form-inline.add-link
+              .form-group
+                .col-lg-12
+                  .input-group.m-bot15
+                    input#linkvalue.form-control
+                    span.input-group-btn
+                      button.btn.btn-primary(type='submit') Whitelist
+            form(role='form' method='post', action='').form-inline.del-link
+              .form-group
+                .col-lg-12
+                  .input-group.m-bot15
+                    select#deletelink.form-control(name='deletelink', type='text', placeholder='Delete Link')
+                      for link in whitelist
+                        option #{link.value}
+                    span.input-group-btn
+                      input.btn.btn-danger(type='submit', value='Delete')                           
+            table.table.table-striped.table-advance.table-hover#linksprotection
+              thead
+                tr
+                  th
+                    i(data-original-title='', title='')
+                    |  Whitelisted URLs
+              tbody#whitelist
+                for link in whitelist
+                  tr(name= link.value)
+                    td #{link.value}
+        .col-md-4
+          .box
+            h4 Spam protection
       // end:content

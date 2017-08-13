@@ -43,7 +43,8 @@ block content
                 label.sr-only(for='name') Command name
                 select#delname.form-control(name='commandname', type='text', placeholder='Command name' style='min-width: 400px; max-width: 400px;')
                   for c in cmds
-                    option #{c.name}
+                    if(c.category == 'custom')
+                      option #{c.name}
               input.btn.btn-danger(type='submit', value='Delete')         
       .row
         .col-md-8
@@ -60,12 +61,13 @@ block content
                   th
               tbody#commands
                 for c in cmds
-                  tr(name= c.name)
-                    td #{c.name}
-                    td.hidden-phone #{c.value}
-                    td
-                      button.btn.btn-danger.btn-xs(data-original-title='', title='')
-                        i.fa.fa-trash-o(data-original-title='', title='')
+                  if(c.category == "custom")
+                    tr(name= c.name)
+                      td #{c.name}
+                      td.hidden-phone #{c.value}
+                      td
+                        button.btn.btn-danger.btn-xs(data-original-title='', title='')
+                          i.fa.fa-trash-o(data-original-title='', title='')
         .col-md-4
           .box
             h4 Basic Commands List

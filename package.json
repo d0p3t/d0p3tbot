@@ -1,6 +1,6 @@
 {
-  "name": "twitch-d0p3tbot",
-  "version": "0.0.1",
+  "name": "d0p3tbot",
+  "version": "0.0.2",
   "description": "Twitch bot for d0p3t",
   "main": "app.js",
   "author": "Remco Troost",
@@ -44,5 +44,13 @@
     "gulp-postcss": "^7.0.0",
     "jshint": "^2.9.5",
     "jshint-stylish": "^2.2.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/d0p3t/d0p3tbot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/d0p3t/d0p3tbot/issues"
+  },
+  "homepage": "https://github.com/d0p3t/d0p3tbot#readme"
 }

@@ -7,20 +7,26 @@ const Notice = require('../models/notice');
 const User = require('../models/user');
 const Alert = require('../models/alert');
 const Variable = require('../models/variable');
+const Link = require('../models/link');
+const Word = require('../models/word');
 
 const client = new tmi.client(config.tmi);
 client.connect();
 
 var twitch = function() {
     var msgcount = 1;
+    var userIsPermitted = "";
 
     var commands = {};
     var notices = {};
     var alerts = {};
     var variables = {};
+    var whitelist = {};
+    var blacklist = {};
 
     setInterval(function(){
-      Command.find({}, function(err, cmds) {
+      logger.info("Refreshing commands, notices, alerts, links and other variables");
+      Command.find({}).sort({ name: 'asc'}).exec(function(err, cmds) {
         if(err)
           logger.error('[Database] Error retrieving commands | ' + err);
         for (var i in cmds)
@@ -43,6 +49,18 @@ var twitch = function() {
           logger.error('[Database] Error retrieving variables | ' + err);
         for (var i in vars)
           variables[i] = vars[i];
+      });
+      Link.find({}, function(err, lnks) {
+        if(err)
+          logger.error('[Database] Error retrieving variables | ' + err);
+        for (var i in lnks)
+          whitelist[i] = lnks[i];
+      });
+      Word.find({}, function(err, words) {
+        if(err)
+          logger.error('[Database] Error retrieving variables | ' + err);
+        for (var i in words)
+          blacklist[i] = words[i];
       });
     }, 30000);
 
@@ -159,6 +177,42 @@ var twitch = function() {
     client.on("chat", function (channel, userstate, message, self) {
       if (self) return;
 
+      if((userstate.username === config.tmi.identity.username || userstate.mod) && message.includes("!permit")) {
+        var isPermission = message.split(" ");
+        userIsPermitted = isPermission['1'];
+        client.action(channel, userIsPermitted + ", you may now post links for the next 60 seconds");
+        logger.info(userIsPermitted + " enabled");
+        setTimeout(function(){
+          userIsPermitted = "";
+          logger.info(userIsPermitted + " disabled");
+        }, 60000);
+      }
+      var messageCheck = message.split(" ");
+      var isWhitelisted = false;
+      var isBlacklisted = false;
+      for(var x in messageCheck) {
+        if(/^(?:(ftp|http|https)?:\/\/)?(?:[\w-]+\.)+([a-z]|[A-Z]|[0-9]){2,6}$/gi.test(messageCheck[x])) {
+          for(var link in whitelist) {
+            var whitelistedLink = whitelist[link].value.replace(".", "\\.").replace("s", "[s5]").replace("i", "[i1l!]").replace("e", "[e3]").replace("b","[b8]").replace("o", "[o0]");
+            var whitelistRegex = new RegExp("^(?:(ftp|http|https)?:\/\/)?(?:[\w-]+\.)*" + whitelistedLink + "", "gi");
+            if(whitelistRegex.test(messageCheck[x]))
+              isWhitelisted = true;
+          }
+          if(userIsPermitted !== userstate.username && userstate.mod === false && isWhitelisted === false)
+            client.timeout(channel, userstate.username, 3, "You were timed out for linking");
+        }
+        else {
+          for(var word in blacklist) {
+            var blacklistedWord = blacklist[word].value.replace("s", "[s5]").replace("i", "[i1l!]").replace("e", "[e3]").replace("b","[b8]").replace("o", "[o0]");
+            var blacklistRegex = new RegExp("" + blacklistedWord + "", "gi");
+            if(blacklistRegex.test(messageCheck[x]))
+              isBlacklisted = true;
+          }
+          if(userstate.mod === false && isBlacklisted === true)
+            client.timeout(channel, userstate.username, 300, "You were timed out for a blacklisted word");
+        }
+      }
+
       if(msgcount === variables[0].value) {
         client.action(channel, notices[getRandomInt(0, objLength(notices) -1)].value);
         msgcount = 1;
@@ -167,77 +221,91 @@ var twitch = function() {
         msgcount++;
 
       for(var i in commands) {
-        if(message == commands[i].name)
+        if(message === commands[i].name && commands[i].category === 'custom')
           ClientSay(channel, commands[i].value);
+        else if(message === commands[i].name && commands[i].category === 'basic') {
+          triggerBasicCommand(commands[i].name, (cb) => {
+            ClientSay(channel, cb);
+          });
+        }
       }
 
-      if(message === "!commands") {
+      if (message.includes("!so")) {
+        var shoutout = message.split(" ");
+        if(shoutout['0'] === "!so") {
+          if(shoutout['1']) {
+            client.api({
+              url: "https://api.twitch.tv/kraken/users?login=" + shoutout['1'],
+              method: 'GET',
+              headers: {
+                'Accept': 'application/vnd.twitchtv.v5+json',
+                'Client-ID': config.tmi.options.clientId
+              }
+            }, function(err, res, body) {
+              if(err)
+                client.say(channel, "Oops something went wrong.");
+              else {
+                client.api({
+                  url: "https://api.twitch.tv/kraken/channels/" + body.users[0]._id,
+                  method: 'GET',
+                  headers: {
+                    'Accept': 'application/vnd.twitchtv.v5+json',
+                    'Client-ID': config.tmi.options.clientId
+                  }
+                }, function(err, res, body) {
+                  if(err)
+                    client.say(channel, "Oops something went wrong.");
+                  else
+                    client.say(channel, "Go give " + body.display_name + " a follow! They were last seen playing " + body.game +"");
+                });
+              }
+            });
+          }
+          else
+            client.say(channel, "You didn't specify a channel! Ex. !so <username>");
+        }
+      }
+    });
+
+    // COMMAND FUNCTIONS
+    function triggerBasicCommand(name, cb) {
+      if(name === "!commands") {
+          logger.info("Commands command triggered");
           var cmdsstring = "Commands: ";
           for (var i in commands) {
               cmdsstring = cmdsstring + commands[i].name + ", ";
           }
-          ClientSay(channel, cmdsstring + " !commands.");
+          cb(cmdsstring);
+          //ClientSay(channel, cmdsstring + " !commands, !followage, !subcount, !so, !uptime.");
           cmdsstring = "";
       }
-      else if(message === "!subcount") {
+      else if(name === "!subcount") { // && commands[i].status === "enabled"
         client.api({
           url: "https://beta.decapi.me/twitch/subcount/" + config.defaults.username
         }, function(err, res, body) {
             if(!err)
-              ClientSay(channel, body + " subs");
+              cb(body + " subs");
+              //ClientSay(channel, body + " subs");
         });
       }
-      else if (message === "!followage") {
+      else if (name === "!followage") {
         client.api({
           url: "https://beta.decapi.me/twitch/followage/" + config.defaults.username + "/" + userstate.username
         }, function(err, res, body) {
             if(!err)
+              cb()
               client.action(channel, userstate.username + " has been following for " + body);
         });
       }
-      else if (message === "!uptime") {
+      else if (name === "!uptime") {
         client.api({
           url: "https://decapi.me/twitch/uptime?channel=" + config.defaults.username
         }, function(err, res, body) {
             if(!err)
-              ClientSay(channel, body);
+              cb(body);
         });
       }
-      else if (message.includes("!so")) {
-        var shoutout = message.split(" ");
-        if(shoutout['1']) {
-          client.api({
-            url: "https://api.twitch.tv/kraken/users?login=" + shoutout['1'],
-            method: 'GET',
-            headers: {
-              'Accept': 'application/vnd.twitchtv.v5+json',
-              'Client-ID': config.tmi.options.clientId
-            }
-          }, function(err, res, body) {
-            if(err)
-              client.say(channel, "Oops something went wrong.");
-            else {
-              client.api({
-                url: "https://api.twitch.tv/kraken/channels/" + body.users[0]._id,
-                method: 'GET',
-                headers: {
-                  'Accept': 'application/vnd.twitchtv.v5+json',
-                  'Client-ID': config.tmi.options.clientId
-                }
-              }, function(err, res, body) {
-                if(err)
-                  client.say(channel, "Oops something went wrong.");
-                else
-                  client.say(channel, "Go give " + body.display_name + " a follow! They were last seen playing " + body.game +"");
-              });
-            }
-          });
-        }
-        else
-          client.say(channel, "You didn't specify a channel! Ex. !so <username>");
-      }
-    });
-
+    }
     // DB FUNCTIONS
     function populateAlerts() {
       var subAlert = new Alert({

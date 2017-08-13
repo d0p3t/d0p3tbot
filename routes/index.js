@@ -6,6 +6,8 @@ let Command = require('../models/command');
 let Notice = require('../models/notice');
 let Alert = require('../models/alert');
 let Variable = require('../models/variable');
+let Link = require('../models/link');
+let Word = require('../models/word');
 const logger = require('../utils/logger');
 const config = require('../config/config');
 
@@ -56,7 +58,16 @@ router.get('/giveaways', require('connect-ensure-login').ensureLoggedIn(), (req,
 });
 
 router.get('/security', require('connect-ensure-login').ensureLoggedIn(), (req, res) => {
-  res.render('security', { title: "d0p3tbot - Security", message: "Security"});
+  Link.find(function(err, links) {
+    if(err)
+      logger.error("[Database] Error finding links | " + err);
+    Word.find(function(err, words) {
+      if(err)
+        logger.error("[Database] Error finding words | " + err);
+      res.render('security', { title: "d0p3tbot - Security", message: "Security", whitelist: links, blacklist: words });      
+    })
+  })
+
 });
 
 router.get('/termsofservice', require('connect-ensure-login').ensureLoggedIn(), (req, res) => {

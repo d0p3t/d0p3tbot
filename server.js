@@ -28,7 +28,7 @@ db.on('error', function(err){
 });
 
 twitch();
-//discord();
+discord();
 
 const app = express();
 const server = require('http').createServer(app);

@@ -224,7 +224,17 @@ var twitch = function() {
         if(message === commands[i].name && commands[i].category === 'custom')
           ClientSay(channel, commands[i].value);
         else if(message === commands[i].name && commands[i].category === 'basic') {
-          triggerBasicCommand(commands[i].name, (cb) => {
+          triggerBasicCommand(commands[i].name, userstate, (cb) => {
+            ClientSay(channel, cb);
+          });
+        }
+        else if(message.includes(commands[i].name) && commands[i].category === 'game') {
+          triggerGameCommand(commands[i].name, (cb) => {
+            ClientSay(channel, cb);
+          });
+        }
+        else if(message.includes(commands[i].name) && commands[i].category === 'mod') {
+          triggerModCommand(commands[i].name, (cb) => {
             ClientSay(channel, cb);
           });
         }
@@ -268,42 +278,128 @@ var twitch = function() {
     });
 
     // COMMAND FUNCTIONS
-    function triggerBasicCommand(name, cb) {
-      if(name === "!commands") {
+    function triggerBasicCommand(name, userstate, channel, cb) {
+      switch (name) {
+        case "!commands":
           logger.info("Commands command triggered");
           var cmdsstring = "Commands: ";
           for (var i in commands) {
               cmdsstring = cmdsstring + commands[i].name + ", ";
           }
           cb(cmdsstring);
-          //ClientSay(channel, cmdsstring + " !commands, !followage, !subcount, !so, !uptime.");
           cmdsstring = "";
-      }
-      else if(name === "!subcount") { // && commands[i].status === "enabled"
-        client.api({
-          url: "https://beta.decapi.me/twitch/subcount/" + config.defaults.username
-        }, function(err, res, body) {
+          break;
+        case "!subcount":
+          client.api({
+            url: "https://beta.decapi.me/twitch/subcount/" + config.defaults.username
+          }, function(err, res, body) {
+              if(!err)
+                cb(body + " subs");
+          });
+          break;
+        case "!followage":
+          client.api({
+            url: "https://beta.decapi.me/twitch/followage/" + config.defaults.username + "/" + userstate.username
+          }, function(err, res, body) {
             if(!err)
-              cb(body + " subs");
-              //ClientSay(channel, body + " subs");
-        });
-      }
-      else if (name === "!followage") {
-        client.api({
-          url: "https://beta.decapi.me/twitch/followage/" + config.defaults.username + "/" + userstate.username
-        }, function(err, res, body) {
-            if(!err)
-              cb()
-              client.action(channel, userstate.username + " has been following for " + body);
-        });
-      }
-      else if (name === "!uptime") {
-        client.api({
-          url: "https://decapi.me/twitch/uptime?channel=" + config.defaults.username
-        }, function(err, res, body) {
+              cb(userstate.username + " has been following for " + body);
+          });
+          break;
+        case "!uptime":
+          client.api({
+            url: "https://decapi.me/twitch/uptime?channel=" + config.defaults.username
+          }, function(err, res, body) {
             if(!err)
               cb(body);
-        });
+          });
+          break;
+        default:
+          break;
+      }
+    };
+
+    function triggerModCommand(message, userstate, cb) {
+      cb("Hello World");
+      // if(userstate.mod) {
+      //   var modMsg = message.split(' ');
+      //   switch (modMsg[0]) {
+      //     case '!title':
+      //       var x = modMsg.shift();
+      //       var newTitle = modMsg.join(' ');
+      //       client.api({
+      //         url: "https://api.twitch.tv/kraken/users?login=" + config.defaults.username,
+      //         method: 'GET',
+      //         headers: {
+      //           'Accept': 'application/vnd.twitchtv.v5+json',
+      //           'Client-ID': config.tmi.options.clientId
+      //         }
+      //       }, function(err, res, body) {
+      //         if(err)
+      //           cb("Oops something went wrong.");
+      //         else {
+      //           client.api({
+      //             url: "https://api.twitch.tv/kraken/channels/" + body.users[0]._id,
+      //             method: 'PUT',
+      //             headers: {
+      //               'Accept': 'application/vnd.twitchtv.v5+json',
+      //               'Authorization': config.tmi.identity.password,
+      //               'Client-ID': config.tmi.options.clientId,
+      //               'Content-Type': 'application/json'
+      //             },
+      //             body: {
+      //               "channel": {
+      //                 "status": newTitle
+      //               }
+      //             }
+      //           }, function(err, res, body) {
+      //             if(err)
+      //               cb("Oops something went wrong.");
+      //             else
+      //               cb("Title was changed to " + body.game +" by " + userstate.username + "");
+      //           });
+      //         }
+      //       });
+      //       break;
+      //     default:
+      //       break;
+      //   }
+      // }
+      // else {
+      //   cb("You do not have enough permissions to do this.");
+      // }
+    };
+
+    function triggerGameCommand(name, cb) {
+      switch (name) {
+        case '!8ball':
+          var answers = [
+            'It is certain',
+            'It is decidedly so',
+            'Without a doubt',
+            'Yes definitely',
+            'You may rely on it',
+            'As I see it, yes',
+            'Most likely',
+            'Most likely... not Kappa',
+            'Outlook good',
+            'Yes',
+            'No Kappa',
+            'Signs point to yes',
+            'Reply hazy try again',
+            'Ask again later',
+            'Better not tell you now',
+            'Cannot predict now',
+            'Concentrate and ask again',
+            'Don\'t count on it',
+            'My reply is no',
+            'My sources say no',
+            'Outlook not so good',
+            'Very doubtful'
+          ];
+          var indexAnswer = getRandomInt(0, answers.length -1);
+          cb(answers[indexAnswer]);
+          break;
+        default:
       }
     }
     // DB FUNCTIONS
@@ -356,7 +452,14 @@ var twitch = function() {
         created_at: Date.now(),
         updated_at: Date.now()
       });
-      Variable.insertMany([msgCount,dsAnnounce], function(err, done) {
+      var streamStatus = new Variable({
+        name: "Discord Announcement Status",
+        value: "false",
+        category: "discord",
+        created_at: Date.now(),
+        updated_at: Date.now()
+      });
+      Variable.insertMany([msgCount,dsAnnounce,streamStatus], function(err, done) {
         if(err)
           logger.error("[Database] Error inserting default Variables");
           logger.info("[Database] Successfully inserted default Variables");
@@ -364,9 +467,10 @@ var twitch = function() {
     }
     // HELPER FUNCTIONS
     function getRandomInt(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
-
     function objLength(obj){
       var i=0;
       for (var x in obj){

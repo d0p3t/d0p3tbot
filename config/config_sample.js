@@ -17,7 +17,7 @@ var config = {};
 
 config.defaults = {
   server_ip: 'localhost',
-  username: 'dashboardusername'
+  username: 'twitchusername'
 };
 
 config.tmi = {

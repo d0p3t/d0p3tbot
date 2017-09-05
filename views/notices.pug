@@ -27,7 +27,7 @@ block content
             form(role='form' method='post', action='').form-inline.edit-notice
               .form-group
                 label.sr-only(for='name') Notice name
-                select#editname.form-control(name='noticename', type='text', placeholder='notice name' style='min-width: 200px; max-width: 200px;')
+                select#editname.form-control(name='noticename', type='text', placeholder='notice name' style='min-width: 200px;')
                   for c in nots
                     option #{c.name}
               .form-group
@@ -41,7 +41,7 @@ block content
             form(role='form' method='post', action='').form-inline.del-notice
               .form-group
                 label.sr-only(for='name') Notice name
-                select#delname.form-control(name='noticename', type='text', placeholder='notice name')
+                select#delname.form-control(name='noticename', type='text', placeholder='notice name' style='min-width: 200px;')
                   for c in nots
                     option #{c.name}
               input.btn.btn-danger(type='submit', value='Delete')         

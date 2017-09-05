@@ -27,9 +27,10 @@ block content
             form(role='form' method='post', action='').form-inline.edit-command
               .form-group
                 label.sr-only(for='name') Command name
-                select#editname.form-control(name='commandname', type='text', placeholder='Command name' style='min-width: 200px; max-width: 200px;')
+                select#editname.form-control(name='commandname', type='text', placeholder='Command name' style='min-width: 200px;')
                   for c in cmds
-                    option #{c.name}
+                    if(c.category == "custom")
+                      option #{c.name}
               .form-group
                 label.sr-only(for='text') Command text
                 input#edittext.form-control(name='commandtext', type='text', placeholder='Command text')
@@ -41,7 +42,7 @@ block content
             form(role='form' method='post', action='').form-inline.del-command
               .form-group
                 label.sr-only(for='name') Command name
-                select#delname.form-control(name='commandname', type='text', placeholder='Command name' style='min-width: 400px; max-width: 400px;')
+                select#delname.form-control(name='commandname', type='text', placeholder='Command name' style='min-width: 200px;')
                   for c in cmds
                     if(c.category == 'custom')
                       option #{c.name}

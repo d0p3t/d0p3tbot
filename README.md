@@ -2,7 +2,7 @@
 
 # d0p3tbot (v0.0.2-alpha)
 
-<img src="http://i.imgur.com/suOPO9z.png" width="662px" height="200px">
+<img src="http://i.imgur.com/gZkK7Yu.png" width="200px" height="200px">
 
 ##### A lightweight chat bot for Twitch and Discord using NodeJS.
 
@@ -60,6 +60,13 @@ Frontend: Go to `http://localhost:3000` and login with `username` equal to your 
 * And lots more...
 
 Implementation of these features is streamed live every Saturday & Sunday at [twitch.tv/d0p3t](https://twitch.tv/d0p3t)
+
+---
+
+## Special Thanks
+I'd like to give a special thanks to the following Github users who's projects made this bot possible.
+* [tmi.js](https://github.com/tmijs/tmi.js) @Schmoopiie & @AlcaDesign
+* [discord.js](https://github.com/hydrabolt/discord.js) @hydrabolt
 
 ---
 
